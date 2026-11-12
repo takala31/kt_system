@@ -1,0 +1,32 @@
+﻿@page "{id:int}"
+@model kt_system.Pages.Customers.DeleteModel
+
+<h2>Delete Customer</h2>
+
+<div class="alert alert-danger">
+
+    Are you sure you want to delete:
+
+    <strong>
+        @Model.FirstName @Model.LastName
+    </strong>
+
+    ?
+
+</div>
+
+<form method="post">
+
+    <input asp-for="CustomerID" type="hidden" />
+
+    <button type="submit"
+            class="btn btn-danger">
+        Delete
+    </button>
+
+    <a asp-page="./Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>

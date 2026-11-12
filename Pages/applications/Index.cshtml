@@ -1,0 +1,86 @@
+﻿@page
+@model kt_system.Pages.Applications.IndexModel
+
+@* <div class="d-flex align-items-center gap-2 mb-3">
+    <h2 class="mb-0 text-white">Applications</h2>
+    <a asp-page="Create" class="btn btn-primary"> New Application </a>
+    <a asp-page="TestCreate" class="btn btn-warning"> New Test Application </a>
+</div> *@
+
+<div style="display:flex;align-items:center;">
+    <span style="font-size:2rem;font-weight:bold;color:white;margin-right:600px;">
+        Applications
+    </span>
+
+    <a asp-page="Create" class="btn btn-primary me-2">
+        New Application
+    </a>
+
+    <a asp-page="/Applications/Create" class="btn btn-warning me-2"
+       asp-route-loadsample="true"
+       asp-route-appid="65">
+        New Test Application
+    </a>
+    @* <a asp-page="Create" class="btn btn-warning">New Test Application</a> *@
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="table-responsive">
+        <table class="table table-striped table-sm text-nowrap app-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Application No</th>
+            <th>Customer</th>
+            <th>Nationality</th>
+            <th>Employer</th>
+            <th>Product</th>
+            <th>Original Price</th>
+            <th>Downpayment</th>
+            <th>NFA</th>
+            <th>Profit Rate</th>
+            <th>Tenor</th>
+            <th>Stage</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var row in Model.Apps)
+        {
+            <tr>
+                <td>@row["AppID"]</td>
+                <td>@row["AppID_usr"]</td>
+
+                <td>
+                    @row["FirstName"]
+                    @row["LastName"]
+                </td>
+
+                <td>@row["Nationality"]</td>
+
+                <td>@row["Employer"]</td>
+
+                <td>@row["AppProduct"]</td>
+
+                <td>@Convert.ToDecimal(row["OriginalPrice"]).ToString("N0")</td>
+                <td>@Convert.ToDecimal(row["Downpayment"]).ToString("N0")</td>
+                <td>@Convert.ToDecimal(row["NFA"]).ToString("N0")</td>
+
+                <td>@row["ProfitRate"]</td>
+                <td>@row["Tenor"]</td>
+
+                <td>@row["Stage"]</td>
+
+                <td>
+                    <a asp-page="Edit"
+                       asp-route-id="@row["AppID"]">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </div>
+</div>  

@@ -1,0 +1,145 @@
+﻿@page "{id:int}"
+@model kt_system.Pages.GeneralCodes.EditModel
+
+@{
+    ViewData["Title"] = "Edit Code";
+}
+
+<div class="card shadow mx-auto" style="max-width:600px;">
+
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            @Model.GC.CodeCategory - @Model.GC.Code
+        </h4>
+        @* <h4 class="mb-0">Edit General Code</h4> *@
+    </div>
+
+    <div class="card-body">
+
+        <form method="post">
+
+            <input type="hidden" asp-for="GC.GeneralCodeID" />
+            <input type="hidden" asp-for="GC.CodeCategory" />
+
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label>Category</label>
+                    <input asp-for="GC.CodeCategory" class="form-control" readonly />
+                </div>
+
+                <div class="col-md-2 mb-2">
+                    <label>Category ID</label>
+                    <input asp-for="GC.CodeCategoryID" class="form-control" readonly />
+                </div>
+
+                <div class="col-md-3 mb-2">
+                    <label>Code</label>
+                    <input asp-for="GC.Code" class="form-control" />
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="mb-2">
+                <label>Description</label>
+                <input asp-for="GC.Description" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 2</label>
+                <input asp-for="GC.Description_2" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 3</label>
+                <input asp-for="GC.Description_3" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 4</label>
+                <input asp-for="GC.Description_4" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 5</label>
+                <input asp-for="GC.Description_5" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label>Remarks</label>
+                <textarea asp-for="GC.Remarks"
+                          rows="2"
+                          class="form-control"></textarea>
+            </div>
+
+            <div class="border rounded p-2 bg-light mb-3">
+
+                <small style="font-size: 8px;">
+
+                    Created By:
+                    @Model.GC.CreatedBy
+
+                    |
+
+                    Updated By:
+                    @Model.GC.UpdatedBy
+
+                </small>
+
+            </div>
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <button type="submit" class="btn btn-danger" asp-page-handler="Delete" onclick="return confirm('Delete this code ?');">Delete</button>
+
+            <a asp-page="./Index" class="btn btn-secondary" asp-route-SelectedCategory="@Model.GC.CodeCategory">Back</a>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<style>
+
+    .form-control[readonly] {
+        color: #212529 !important;
+        background-color: #e9ecef !important;
+        opacity: 1 !important;
+    }
+
+
+    .form-control,
+    .form-select {
+        padding: 2px 6px;
+        min-height: 28px;
+        font-size: 13px;
+    }
+
+    textarea.form-control {
+        min-height: 50px;
+    }
+
+    .mb-2 {
+        margin-bottom: 3px !important;
+    }
+
+    label {
+        margin-bottom: 0;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .card-body {
+        padding: 10px;
+    }
+
+</style>

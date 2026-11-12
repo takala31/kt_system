@@ -1,0 +1,625 @@
+﻿@page
+@model kt_system.Pages.Applications.CreateModel
+
+<div class="container mt-3">
+
+    <h2>Create Application</h2>
+
+    <form method="post">
+        <!-- tab header-->
+        <ul class="nav nav-tabs mb-3" id="appTabs" role="tablist">
+            <li class="nav-item">
+                <div>
+                    <button class="nav-link"
+                            data-bs-toggle="tab"
+                            data-bs-target="#tabApplication"
+                            type="button">Application</button>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabCustomer"
+                        type="button">Customer </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabProperty"
+                        type="button">Property Details</button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabPropertyAddress"
+                        type="button">Property Address</button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabFinance"
+                        type="button">Finance</button>
+            </li>
+
+        </ul>
+
+        <!-- tab content-->
+        <div class="tab-content">
+            <!-- Application tab -->
+            <div class="tab-pane fade" id="tabApplication">
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between" style="white-space: nowrap; padding: 0.5rem 1rem;">
+                        <span>Application</span>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <label asp-for="App.AppID_usr" class="col-sm-3 col-form-label">Application No</label>
+                            <div class="col-sm-4"> <input asp-for="App.AppID_usr" class="form-control" readonly style="background-color: #fff; color: #212529; opacity: 1;" /></div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.AppDate_usr" class="col-sm-3 col-form-label">Application Date</label>
+                            <div class="col-sm-4"> <input asp-for="App.AppDate_usr" type="date" class="form-control" /></div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.AppProduct" class="col-sm-3 col-form-label">Product</label>
+                            <div class="col-sm-4">
+                                <select asp-for="App.AppProduct" class="form-select">
+                                    <option value="">-- Select Product --</option>
+                                    @foreach (var p in Model.drpProducts)
+                                    {
+                                        <option value="@p["ProductCode"]">
+                                            @p["ProductCode"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.Stage" class="col-sm-3 col-form-label">Stage</label>
+                            <div class="col-sm-4">
+                                <select asp-for="App.Stage" class="form-select">
+                                    <option value="">-- Select Stage--</option>
+                                    @foreach (var p in Model.drpStages)
+                                    {
+                                        <option value="@p["Stage"]">
+                                            @p["Stage"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Customer & Employment tab -->
+            <div class="tab-pane fade show active" id="tabCustomer">
+                <!-- Customer -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">Customer</div>
+
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label asp-for="Cust.FirstName" class="col-sm-2 col-form-label">First Name</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Cust.FirstName" class="form-control" />
+                            </div>
+
+                            <label asp-for="Cust.CustomerType" class="col-sm-2 col-form-label">Customer Type</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Cust.CustomerType" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Cust.MiddleName" class="col-sm-2 col-form-label">Middle Name</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Cust.MiddleName" class="form-control" />
+                            </div>
+
+                            <label asp-for="Cust.Nationality" class="col-sm-2 col-form-label">Nationality</label>
+                            <div class="col-sm-3">
+                                <select asp-for="Cust.Nationality" class="form-select">
+                                    <option value="">-- Select Nationality --</option>
+                                    @foreach (var p in Model.drpNationalities)
+                                    {
+                                        <option value="@p["Nationality"]">
+                                            @p["Nationality"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Cust.LastName" class="col-sm-2 col-form-label">Last Name</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Cust.LastName" class="form-control" />
+                            </div>
+
+                            <label asp-for="Cust.DOB" class="col-sm-2 col-form-label">DOB</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Cust.DOB" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Employment -->
+                <div class="card mb-4">
+
+                    <div class="card-header bg-primary text-white">
+                        Employment
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label asp-for="Empl.Employer" class="col-sm-2 col-form-label">Employer</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Empl.Employer" class="form-control" />
+                            </div>
+
+                            <label asp-for="Empl.Salary" class="col-sm-2 col-form-label">Salary</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Empl.Salary" class="form-control text-end" />
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Empl.EmployerActivity" class="col-sm-2 col-form-label">Employer Activity</label>
+                            <div class="col-sm-4">
+                                <select asp-for="Empl.EmployerCatg" class="form-select">
+                                    <option value="">-- Select Employer Activity --</option>
+                                    @foreach (var p in Model.drpEmployerActivity)
+                                    {
+                                        <option value="@p["EmployerActivity"]">
+                                            @p["EmployerActivity"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <label asp-for="Empl.EmployerCatg" class="col-sm-2 col-form-label">Employer Category</label>
+                            <div class="col-sm-3">
+                                <select asp-for="Empl.EmployerCatg" class="form-select">
+                                    <option value="">-- Select Employer Category --</option>
+                                    @foreach (var p in Model.drpEmployerCatg)
+                                    {
+                                        <option value="@p["EmployerCatg"]">
+                                            @p["EmployerCatg"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Empl.DOJ" class="col-sm-2 col-form-label">Date of Joining</label>
+                            <div class="col-sm-4">
+                                <input asp-for="Empl.DOJ" class="form-control" />
+                            </div>
+
+                            <label asp-for="Empl.LOS" class="col-sm-2 col-form-label">Length of Service</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Empl.LOS" class="form-control" />
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-3">
+                            <label asp-for="Empl.BankingWith" class="col-sm-2 col-form-label">Banking With</label>
+                            <div class="col-sm-4">
+                                <select asp-for="Empl.BankingWith" class="form-select">
+                                    <option value="">-- Select Bank--</option>
+                                    @foreach (var p in Model.drpBankCode_UAECB)
+                                    {
+                                        <option value="@p["BankCode_UAECB"]">
+                                            @p["BankCode_UAECB"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+
+                            <label asp-for="Empl.AccountNumber" class="col-sm-2 col-form-label">Account Number</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Empl.AccountNumber" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <br />
+                            <br />
+                            <div class="col-md-2">
+                            </div>
+
+                            <div class="col-md-2">
+                                <select asp-for="Cust.CustomerID" asp-items="Model.CustomerList" class="form-control form-control-sm" id="sizesSelectSmall">
+                                    @* <select class="form-control form-control-sm" id="sizesSelectSmall"> *@
+                                    <option value="">-- Select Existing Customer --</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="submit" asp-page-handler="LoadCustomer" class="btn btn-link theme-primary">Load</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property tab -->
+            <div class="tab-pane fade" id="tabProperty">
+                <!-- ====================-->
+                <!-- Property details -->
+                <!-- ====================-->
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header bg-primary text-white"> Property Details </div>
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.PropertyType" class="col-sm-3 col-form-label">Property Type</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.PropertyType" class="form-control" />
+                            </div>
+
+                            <label asp-for="Prop.PropertyStatus" class="col-sm-2 col-form-label">Status</label>
+                            <div class="col-sm-3">
+                                <select asp-for="Prop.PropertyStatus" class="form-select">
+                                    <option value="">-- Select Property Status--</option>
+                                    @foreach (var p in Model.drpPropertyStatus)
+                                    {
+                                        <option value="@p["PropertyStatus"]">
+                                            @p["PropertyStatus"]
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.MortgageDegree" class="col-sm-3 col-form-label">Mortgage Degree</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.MortgageDegree" class="form-control" />
+                            </div>
+
+                            <label asp-for="Prop.DateOfCompletion" class="col-sm-2 col-form-label">Completion Date</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.DateOfCompletion" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.MasterDevelopmentName" class="col-sm-3 col-form-label">Master Development</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.MasterDevelopmentName" class="form-control" />
+                            </div>
+
+                            <label asp-for="Prop.MasterDeveloperName" class="col-sm-2 col-form-label">Master Developer</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.MasterDeveloperName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.ProjectName" class="col-sm-3 col-form-label">Project Name</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.ProjectName" class="form-control" />
+                            </div>
+
+                            <label asp-for="Prop.DeveloperName" class="col-sm-2 col-form-label">Developer</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.DeveloperName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.BuildingName" class="col-sm-3 col-form-label">Building Name</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Prop.BuildingName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.OriginalPropertyValue" class="col-sm-3 col-form-label">Original Value</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.OriginalPropertyValue" class="form-control text-end" />
+                            </div>
+
+                            <label asp-for="Prop.AppraisalValue" class="col-sm-2 col-form-label">Appraisal Value</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.AppraisalValue" class="form-control text-end" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.AppraisalBy" class="col-sm-3 col-form-label">Appraisal By</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.AppraisalBy" class="form-control" />
+                            </div>
+
+                            <label asp-for="Prop.AppraisalDate" class="col-sm-2 col-form-label">Appraisal Date</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.AppraisalDate" type="date" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.PropertyDesc" class="col-sm-3 col-form-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea asp-for="Prop.PropertyDesc" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+                <!-- Property address tab -->
+                <div class="tab-pane fade" id="tabPropertyAddress">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header bg-primary text-white">Property Address Details</div>
+
+                        <div class="card-body">
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.LotNo" class="col-sm-2 col-form-label">Lot No</label>
+                                <div class="col-sm-4">
+                                <input asp-for="Prop.LotNo" class="form-control" />
+                                </div>
+
+                            <label asp-for="Prop.PlotNo" class="col-sm-2 col-form-label">Plot No</label>
+                                <div class="col-sm-3">
+                                <input asp-for="Prop.PlotNo" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.TitleDeedNo" class="col-sm-2 col-form-label">Title Deed No</label>
+                                <div class="col-sm-4">
+                                <input asp-for="Prop.TitleDeedNo" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.VillaAptNo" class="col-sm-2 col-form-label">Villa / Apt No</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.VillaAptNo" class="form-control" />
+                                </div>
+
+                                <label asp-for="Prop.BuildingCompoundName" class="col-sm-2 col-form-label">Building / Compound</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="Prop.BuildingCompoundName" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.StreetName" class="col-sm-2 col-form-label">Street Name</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.StreetName" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.Country" class="col-sm-2 col-form-label">Country</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.Country" class="form-control" />
+                                </div>
+
+                                <label asp-for="Prop.Emirate" class="col-sm-2 col-form-label">Emirate</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="Prop.Emirate" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.AreaName" class="col-sm-2 col-form-label">Area Name</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.AreaName" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.LandArea" class="col-sm-2 col-form-label">Land Area</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.LandArea" class="form-control text-end" />
+                                </div>
+
+                                <label asp-for="Prop.BuiltupArea" class="col-sm-2 col-form-label">Built-up Area</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="Prop.BuiltupArea" class="form-control text-end" />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.PropertyValuePerUnit" class="col-sm-2 col-form-label">Value Per Unit</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.PropertyValuePerUnit" class="form-control text-end" />
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class="row mb-3 mt-3">
+                            <label asp-for="Prop.RegistrationType" class="col-sm-2 col-form-label">Registration Type</label>
+                                <div class="col-sm-4">
+                                <select asp-for="Prop.RegistrationType" class="form-select">
+                                    <option value="">-- Select Registration Type--</option>
+                                    @foreach (var p in Model.drpRegistrationType)
+                                    {
+                                        <option value="@p["RegistrationType"]">@p["RegistrationType"]</option>
+                                    }
+                                </select>
+
+                                </div>
+
+                            <label asp-for="Prop.RegistrationNumber" class="col-sm-2 col-form-label">Registration No</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="Prop.RegistrationNumber" class="form-control" />
+                                </div>
+                            </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Prop.RegisteredOnNameOf" class="col-sm-2 col-form-label">Registered On Name Of</label>
+                            <div class="col-sm-4"><input asp-for="Prop.RegisteredOnNameOf" class="form-control" /></div>
+
+                            <label asp-for="Prop.Relation" class="col-sm-2 col-form-label">Relation</label>
+                            <div class="col-sm-3">
+                                <select asp-for="Prop.Relation" class="form-select">
+                                    <option value="">-- Select Relation Type--</option>
+                                    @foreach (var p in Model.drpRelationType)
+                                    {
+                                        <option value="@p["RelationType"]">@p["RelationType"]</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                            <div class="row mb-3">
+                            <label asp-for="Prop.RegistrationDate" class="col-sm-2 col-form-label">Registration Date</label>
+                                <div class="col-sm-4">
+                                    <input asp-for="Prop.RegistrationDate" type="date" class="form-control" />
+                                </div>
+
+                                <label asp-for="Prop.IssuedFrom" class="col-sm-2 col-form-label">Issued From</label>
+                                <div class="col-sm-3">
+                                    <input asp-for="Prop.IssuedFrom" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            <!-- Finance tab -->
+            <div class="tab-pane fade" id="tabFinance">
+                <!-- Finance Card -->
+                <!-- ===================================================== -->
+                <!-- Finance Details -->
+                <!-- ===================================================== -->
+
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header bg-primary text-white">
+                        Finance Details
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row mb-3">
+                            <label asp-for="App.OriginalPrice" class="col-sm-3 col-form-label">Original Price</label>
+                            <div class="col-sm-4">
+                                <input asp-for="App.OriginalPrice" id="OriginalPrice" type="number" step="0.01" class="form-control text-end" />
+                            </div>
+
+                            <label asp-for="App.Downpayment" class="col-sm-2 col-form-label">Downpayment</label>
+                            <div class="col-sm-3">
+                                <input asp-for="App.Downpayment" id="Downpayment" type="number" step="0.01" class="form-control text-end" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.NFA" class="col-sm-3 col-form-label">NFA</label>
+                            <div class="col-sm-4">
+                                @* <input asp-for="NFA" type="number" step="0.01" class="form-control text-end" /> *@
+                                <input asp-for="App.NFA" class="form-control text-end" type="number" step="0.01" readonly />
+                            </div>
+
+                            <label asp-for="App.ProfitRate" class="col-sm-2 col-form-label">Profit Rate (%)</label>
+                            <div class="col-sm-3">
+                                <input asp-for="App.ProfitRate" type="number" step="0.01" class="form-control text-end" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.Tenor" class="col-sm-3 col-form-label">Tenor (Months)</label>
+                            <div class="col-sm-4">
+                                <input asp-for="App.Tenor" type="number" step="0.01" class="form-control text-end" />
+                            </div>
+
+                            <label asp-for="App.DSR" class="col-sm-2 col-form-label">DSR (%)</label>
+                            <div class="col-sm-3">
+                                <input asp-for="App.DSR" type="number" step="0.01" class="form-control text-end" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.SalesName" class="col-sm-3 col-form-label">Sales Name</label>
+                            <div class="col-sm-9">
+                                <input asp-for="App.SalesName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="App.Remarks" class="col-sm-3 col-form-label">Remarks</label>
+                            <div class="col-sm-9">
+                                <textarea asp-for="App.Remarks" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- Buttons -->
+        <!-- ===================================================== -->
+
+        <div class="card">
+            <div class="card-body">
+                <button type="submit" class="btn btn-primary">Save New</button>
+                <a asp-page="Index" class="btn btn-secondary">Bank to List</a>
+            </div>
+        </div>
+
+
+
+
+        <script>
+            function calculateNFA() {
+
+                var originalPrice =
+                    parseFloat(document.getElementById('OriginalPrice').value) || 0;
+
+                var downpayment =
+                    parseFloat(document.getElementById('Downpayment').value) || 0;
+
+                var nfa = originalPrice - downpayment;
+
+                document.getElementById('NFA').value = nfa.toFixed(2);
+            }
+
+            document.getElementById('OriginalPrice')
+                .addEventListener('input', calculateNFA);
+
+            document.getElementById('Downpayment')
+                .addEventListener('input', calculateNFA);
+
+            calculateNFA(); // Initial calculation for Edit page
+        </script>
+
+    </form>
+
+</div>
+
+

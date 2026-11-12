@@ -1,0 +1,193 @@
+﻿@page
+@model kt_system.Pages.Customers.EditModel
+@{
+    ViewData["Title"] = "Edit Customer";
+
+    <h2>Edit Customer</h2>
+    <form method="post">
+
+        <div class="card mt-3">
+            <div class="card-header bg-primary text-white">
+                Personal Information
+                <input asp-for="CustomerID" readonly class="form-control d-inline-block ms-2" style="width:70px;height:25px;padding:2px 6px;" />
+            </div>
+
+            <div class="card-body">
+                <!-- Personal Information-->
+
+                <div class="row">                    
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="FirstName"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="MiddleName"></label>
+                        <input asp-for="MiddleName" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="LastName"></label>
+                        <input asp-for="LastName" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="AraName"></label>
+                        <input asp-for="AraName" class="form-control" />
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="DOB"></label>
+                        <input asp-for="DOB" type="date" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Gender"></label>
+                        <select asp-for="Gender" class="form-control">
+                            <option value="">Select</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="MaritalStatus"></label>
+                        <select asp-for="MaritalStatus" class="form-control">
+                            <option value="">Select</option>
+                            <option>Single</option>
+                            <option>Married</option>
+                            <option>Divorced</option>
+                            <option>Widowed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Nationality"></label>
+                        <input asp-for="Nationality" class="form-control" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="CustomerStatus">Status</label>
+
+                        <select asp-for="CustomerStatus" class="form-control">
+                            <option value="">Select</option>
+                            <option>Active</option>
+                            <option>Inactive</option>
+                            <option>Frozen</option>
+                            <option>Blacklisted</option>
+                            <option>Archived</option>
+                        </select>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="card mt-3">
+                <!-- Identity Documents-->
+                <div class="card-header bg-secondary text-white">
+                    Identity Documents
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="EmiratesID"></label>
+                            <input asp-for="EmiratesID"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label asp-for="EmiratesIDExpiry"></label>
+                            <input asp-for="EmiratesIDExpiry"
+                                   type="date"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="PassportNumber"></label>
+                            <input asp-for="PassportNumber"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label asp-for="PassportExpiry"></label>
+                            <input asp-for="PassportExpiry"
+                                   type="date"
+                                   class="form-control" />
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <!-- Contact Information-->
+                <div class="card-header bg-info text-white">
+                    Contact Information
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Mobile"></label>
+                            <input asp-for="Mobile" class="form-control" />
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="AlternateMobile"></label>
+                            <input asp-for="AlternateMobile" class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control" />
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Country"></label>
+                            <input asp-for="Country" class="form-control" />
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Emirate"></label>
+                            <input asp-for="Emirate" class="form-control" />
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="City"></label>
+                            <input asp-for="City" class="form-control" />
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Area"></label>
+                            <input asp-for="Area" class="form-control" />
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <!-- Buttons-->
+                <button type="submit" class="btn btn-success">Save Changes</button>
+                <a asp-page="./Index" class="btn btn-secondary">Back</a>
+            </div>
+    </form>
+}

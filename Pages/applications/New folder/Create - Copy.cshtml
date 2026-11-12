@@ -1,0 +1,684 @@
+﻿@page
+@model kt_system.Pages.Applications.CreateModel
+
+<div class="container mt-3">
+
+    <h2>Create Application</h2>
+
+    <form method="post">
+        <div class="mb-3">
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- Application -->
+        <!-- ===================================================== -->
+
+        <div class="card mb-3">
+
+            <div class="card-header bg-primary text-white d-flex align-items-center justify-content-between" style="white-space: nowrap; padding: 0.5rem 1rem;">
+                <span>
+                    Application ---------------------------------------------------------------------------
+                    <button type="submit" class="btn btn-primary btn-sm flex-shrink-0" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Save New</button>
+                    <a asp-page="./Index" class="btn btn-secondary btn-sm flex-shrink-0" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">Back to List</a>
+                </span>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-3">
+                    <label asp-for="AppID_usr" class="col-sm-3 col-form-label">Application No</label>
+                    <div class="col-sm-4"> <input asp-for="AppID_usr" class="form-control" readonly style="background-color: #fff; color: #212529; opacity: 1;" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="AppDate_usr" class="col-sm-3 col-form-label">Application Date</label>
+                    <div class="col-sm-4"> <input asp-for="AppDate_usr" type="date" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="AppProduct" class="col-sm-3 col-form-label">Product</label>
+                    <div class="col-sm-4">
+                        <select asp-for="AppProduct" class="form-select">
+                            <option value="">-- Select Product --</option>
+                            @foreach (var p in Model.drpProducts)
+                            {
+                                <option value="@p["ProductCode"]">
+                                    @p["ProductCode"]
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Stage" class="col-sm-3 col-form-label">Stage</label>
+                    <div class="col-sm-4">
+                        <select asp-for="Stage" class="form-select">
+                            <option value="">-- Select Stage--</option>
+                            @foreach (var p in Model.drpStages)
+                            {
+                                <option value="@p["Stage"]">
+                                    @p["Stage"]
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- Customer -->
+        <!-- ===================================================== -->
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Customer</div>
+
+            <div class="card-body">
+@*                     <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <select asp-for="CustomerID" asp-items="Model.CustomerList" class="form-select">
+                                <option value="">-- Select Customer --</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 mb-3"><button type="submit" asp-page-handler="LoadCustomer" class="btn btn-info w-100">Load Existing Customer</button></div>
+                    </div> *@
+
+
+
+@*                 <div class="row align-items-end mb-3">
+
+                    <div class="col-md-6">
+                        <select asp-for="CustomerID"
+                                asp-items="Model.CustomerList"
+                                class="form-select">
+                            <option value="">-- Select Customer --</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button type="submit"
+                                asp-page-handler="LoadCustomer"
+                                class="btn btn-info w-100">
+                            Load Existing Customer
+                        </button>
+                    </div>
+
+                </div> *@
+
+                <div class="row justify-content-center align-items-end mb-3">
+
+                    <div class="col-md-2">
+                        <select asp-for="CustomerID"
+                                asp-items="Model.CustomerList"
+                                class="form-select">
+                            <option value="">-- Select Customer --</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-1">
+                        <button type="submit"
+                                asp-page-handler="LoadCustomer"
+                                class="btn btn-info w-100">
+                            Load
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-4">
+                        <input asp-for="FirstName" class="form-control" />
+                    </div>
+
+                    <label asp-for="MiddleName" class="col-sm-2 col-form-label">Middle Name</label>
+                    <div class="col-sm-3">
+                        <input asp-for="MiddleName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-4">
+                        <input asp-for="LastName" class="form-control" />
+                    </div>
+
+                    <label asp-for="Nationality" class="col-sm-2 col-form-label">Nationality</label>
+                    <div class="col-sm-3">
+                        <select asp-for="Nationality" class="form-select">
+                            <option value="">-- Select Nationality --</option>
+                            @foreach (var p in Model.drpNationalities)
+                            {
+                                <option value="@p["Nationality"]">
+                                    @p["Nationality"]
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="CustomerType" class="col-sm-3 col-form-label">Customer Type</label>
+                    <div class="col-sm-4">
+                        <input asp-for="CustomerType" class="form-control" />
+                    </div>
+
+                    <label asp-for="DOB" class="col-sm-2 col-form-label">DOB</label>
+                    <div class="col-sm-3">
+                        <input asp-for="DOB" type="date" class="form-control" />
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        @*         <div class="card mb-3">
+
+            <div class="card-header bg-primary text-white">
+                Customer
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-3">
+                    <label asp-for="FirstName" class="col-sm-3 col-form-label">First Name</label>
+                    <div class="col-sm-4"><input asp-for="FirstName" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="MiddleName" class="col-sm-3 col-form-label">Middle Name</label>
+                    <div class="col-sm-4"> <input asp-for="MiddleName" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="LastName" class="col-sm-3 col-form-label">Last Name</label>
+                    <div class="col-sm-4"> <input asp-for="LastName" class="form-control" /> </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Nationality" class="col-sm-3 col-form-label">Nationality</label>
+                    <div class="col-sm-4">
+                        <select asp-for="Nationality" class="form-select">
+                            <option value="">-- Select Nationality --</option>
+                            @foreach (var p in Model.drpNationalities)
+                            {
+                                <option value="@p["Nationality"]">
+                                    @p["Nationality"]
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="CustomerType" class="col-sm-3 col-form-label">Customer Type</label>
+                    <div class="col-sm-4"> <input asp-for="CustomerType" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="DOB" class="col-sm-3 col-form-label">DOB</label>
+                    <div class="col-sm-4"> <input asp-for="DOB" type="date" class="form-control" /></div>
+                </div>
+
+            </div>
+        </div> *@
+
+        <!-- EMPLOYMENT DETAILS -->
+        <div class="card mb-3">
+
+            <div class="card-header bg-primary text-white">
+                Employment
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-3">
+                    <label asp-for="Employer" class="col-sm-3 col-form-label">Employer</label>
+                    <div class="col-sm-4">
+                        <input asp-for="Employer" class="form-control" />
+                    </div>
+
+                    <label asp-for="EmployerCatg" class="col-sm-2 col-form-label">Employer Category</label>
+                    <div class="col-sm-3">
+                        <input asp-for="EmployerCatg" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="EmployerActivity" class="col-sm-3 col-form-label">Employer Activity</label>
+                    <div class="col-sm-4">
+                        <input asp-for="EmployerActivity" class="form-control" />
+                    </div>
+
+                    <label asp-for="Salary" class="col-sm-2 col-form-label">Salary</label>
+                    <div class="col-sm-3">
+                        <input asp-for="Salary" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="DOJ" class="col-sm-3 col-form-label">Date of Joining</label>
+                    <div class="col-sm-4">
+                        <input asp-for="DOJ" class="form-control" />
+                    </div>
+
+                    <label asp-for="LOS" class="col-sm-2 col-form-label">Length of Service</label>
+                    <div class="col-sm-3">
+                        <input asp-for="LOS" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="BankingWith" class="col-sm-3 col-form-label">Banking With</label>
+                    <div class="col-sm-4">
+                        <input asp-for="BankingWith" class="form-control" />
+                    </div>
+
+                    <label asp-for="AccountNumber" class="col-sm-2 col-form-label">Account Number</label>
+                    <div class="col-sm-3">
+                        <input asp-for="AccountNumber" class="form-control" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        @*         <!-- EMPLOYMENT DETAILS -->
+        <div class="card mb-3">
+
+            <div class="card-header bg-primary text-white">
+                Employment
+            </div>
+
+            <div class="card-body">
+                <div class="row mb-3">
+                    <label asp-for="Employer" class="col-sm-3 col-form-label">Employer</label>
+                    <div class="col-sm-4"> <input asp-for="Employer" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="EmployerCatg" class="col-sm-3 col-form-label">Employer Category</label>
+                    <div class="col-sm-4"><input asp-for="EmployerCatg" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="EmployerActivity" class="col-sm-3 col-form-label">Employer Activity</label>
+                    <div class="col-sm-4"> <input asp-for="EmployerActivity" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Salary" class="col-sm-3 col-form-label">Salary</label>
+                    <div class="col-sm-4"><input asp-for="Salary" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="DOJ" class="col-sm-3 col-form-label">Date of Joining</label>
+                    <div class="col-sm-4">
+                        <input asp-for="DOJ" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="LOS" class="col-sm-3 col-form-label">Length of Service</label>
+                    <div class="col-sm-4"> <input asp-for="LOS" class="form-control" /></div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="BankingWith" class="col-sm-3 col-form-label">Banking With</label>
+                    <div class="col-sm-4"> <input asp-for="BankingWith" class="form-control" /> </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="AccountNumber" class="col-sm-3 col-form-label">Account Number</label>
+                    <div class="col-sm-4"> <input asp-for="AccountNumber" class="form-control" /></div>
+                </div>
+            </div>
+        </div> *@
+
+        <!-- ===================================================== -->
+        <!-- Property details -->
+        <!-- ===================================================== -->
+        <div class="card shadow-sm mt-3">
+            <div class="card-header bg-primary text-white">
+                Property Details
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-3">
+                    <label asp-for="PropertyType" class="col-sm-3 col-form-label">Property Type</label>
+                    <div class="col-sm-4">
+                        <input asp-for="PropertyType" class="form-control" />
+                    </div>
+
+                    <label asp-for="PropertyStatus" class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-3">
+                        <input asp-for="PropertyStatus" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="MortgageDegree" class="col-sm-3 col-form-label">Mortgage Degree</label>
+                    <div class="col-sm-4">
+                        <input asp-for="MortgageDegree" class="form-control" />
+                    </div>
+
+                    <label asp-for="DateOfCompletion" class="col-sm-2 col-form-label">Completion Date</label>
+                    <div class="col-sm-3">
+                        <input asp-for="DateOfCompletion" type="date" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="MasterDevelopmentName" class="col-sm-3 col-form-label">Master Development</label>
+                    <div class="col-sm-4">
+                        <input asp-for="MasterDevelopmentName" class="form-control" />
+                    </div>
+
+                    <label asp-for="MasterDeveloperName" class="col-sm-2 col-form-label">Master Developer</label>
+                    <div class="col-sm-3">
+                        <input asp-for="MasterDeveloperName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="ProjectName" class="col-sm-3 col-form-label">Project Name</label>
+                    <div class="col-sm-4">
+                        <input asp-for="ProjectName" class="form-control" />
+                    </div>
+
+                    <label asp-for="DeveloperName" class="col-sm-2 col-form-label">Developer</label>
+                    <div class="col-sm-3">
+                        <input asp-for="DeveloperName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="BuildingName" class="col-sm-3 col-form-label">Building Name</label>
+                    <div class="col-sm-9">
+                        <input asp-for="BuildingName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="OriginalPropertyValue" class="col-sm-3 col-form-label">Original Value</label>
+                    <div class="col-sm-4">
+                        <input asp-for="OriginalPropertyValue" class="form-control text-end" />
+                    </div>
+
+                    <label asp-for="AppraisalValue" class="col-sm-2 col-form-label">Appraisal Value</label>
+                    <div class="col-sm-3">
+                        <input asp-for="AppraisalValue" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="AppraisalBy" class="col-sm-3 col-form-label">Appraisal By</label>
+                    <div class="col-sm-4">
+                        <input asp-for="AppraisalBy" class="form-control" />
+                    </div>
+
+                    <label asp-for="AppraisalDate" class="col-sm-2 col-form-label">Appraisal Date</label>
+                    <div class="col-sm-3">
+                        <input asp-for="AppraisalDate" type="date" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="PropertyDesc" class="col-sm-3 col-form-label">Description</label>
+                    <div class="col-sm-9">
+                        <textarea asp-for="PropertyDesc"
+                                  rows="4"
+                                  class="form-control"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- Property Address Details -->
+        <!-- ===================================================== -->
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-primary text-white">
+                Property Address Details
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-3">
+                    <label asp-for="LotNo" class="col-sm-3 col-form-label">Lot No</label>
+                    <div class="col-sm-4">
+                        <input asp-for="LotNo" class="form-control" />
+                    </div>
+
+                    <label asp-for="PlotNo" class="col-sm-2 col-form-label">Plot No</label>
+                    <div class="col-sm-3">
+                        <input asp-for="PlotNo" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="TitleDeedNo" class="col-sm-3 col-form-label">Title Deed No</label>
+                    <div class="col-sm-9">
+                        <input asp-for="TitleDeedNo" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="VillaAptNo" class="col-sm-3 col-form-label">Villa / Apt No</label>
+                    <div class="col-sm-4">
+                        <input asp-for="VillaAptNo" class="form-control" />
+                    </div>
+
+                    <label asp-for="BuildingCompoundName" class="col-sm-2 col-form-label">Building / Compound</label>
+                    <div class="col-sm-3">
+                        <input asp-for="BuildingCompoundName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="StreetName" class="col-sm-3 col-form-label">Street Name</label>
+                    <div class="col-sm-9">
+                        <input asp-for="StreetName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Country" class="col-sm-3 col-form-label">Country</label>
+                    <div class="col-sm-4">
+                        <input asp-for="Country" class="form-control" />
+                    </div>
+
+                    <label asp-for="Emirate" class="col-sm-2 col-form-label">Emirate</label>
+                    <div class="col-sm-3">
+                        <input asp-for="Emirate" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="AreaName" class="col-sm-3 col-form-label">Area Name</label>
+                    <div class="col-sm-9">
+                        <input asp-for="AreaName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="LandArea" class="col-sm-3 col-form-label">Land Area</label>
+                    <div class="col-sm-4">
+                        <input asp-for="LandArea" class="form-control text-end" />
+                    </div>
+
+                    <label asp-for="BuiltupArea" class="col-sm-2 col-form-label">Built-up Area</label>
+                    <div class="col-sm-3">
+                        <input asp-for="BuiltupArea" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="PropertyValuePerUnit" class="col-sm-3 col-form-label">Value Per Unit</label>
+                    <div class="col-sm-4">
+                        <input asp-for="PropertyValuePerUnit" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="row mb-3">
+                    <label asp-for="RegistrationType" class="col-sm-3 col-form-label">Registration Type</label>
+                    <div class="col-sm-4">
+                        <input asp-for="RegistrationType" class="form-control" />
+                    </div>
+
+                    <label asp-for="RegistrationNumber" class="col-sm-2 col-form-label">Registration No</label>
+                    <div class="col-sm-3">
+                        <input asp-for="RegistrationNumber" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="RegisteredOnNameOf" class="col-sm-3 col-form-label">Registered On Name Of</label>
+                    <div class="col-sm-4">
+                        <input asp-for="RegisteredOnNameOf" class="form-control" />
+                    </div>
+
+                    <label asp-for="Relation" class="col-sm-2 col-form-label">Relation</label>
+                    <div class="col-sm-3">
+                        <input asp-for="Relation" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="RegistrationDate" class="col-sm-3 col-form-label">Registration Date</label>
+                    <div class="col-sm-4">
+                        <input asp-for="RegistrationDate" type="date" class="form-control" />
+                    </div>
+
+                    <label asp-for="IssuedFrom" class="col-sm-2 col-form-label">Issued From</label>
+                    <div class="col-sm-3">
+                        <input asp-for="IssuedFrom" class="form-control" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <!-- ===================================================== -->
+        <!-- Finance Details -->
+        <!-- ===================================================== -->
+
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-primary text-white">
+                Finance Details
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-3">
+                    <label asp-for="OriginalPrice" class="col-sm-3 col-form-label">Original Price</label>
+                    <div class="col-sm-4">
+                        <input asp-for="OriginalPrice" id="OriginalPrice" type="number" step="0.01" class="form-control text-end" />
+                    </div>
+
+                    <label asp-for="Downpayment" class="col-sm-2 col-form-label">Downpayment</label>
+                    <div class="col-sm-3">
+                        <input asp-for="Downpayment" id="Downpayment" type="number" step="0.01" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="NFA" class="col-sm-3 col-form-label">NFA</label>
+                    <div class="col-sm-4">
+                        @* <input asp-for="NFA" type="number" step="0.01" class="form-control text-end" /> *@
+                        <input asp-for="NFA" class="form-control text-end" type="number" step="0.01" readonly />
+                    </div>
+
+                    <label asp-for="ProfitRate" class="col-sm-2 col-form-label">Profit Rate (%)</label>
+                    <div class="col-sm-3">
+                        <input asp-for="ProfitRate" type="number" step="0.01" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Tenor" class="col-sm-3 col-form-label">Tenor (Months)</label>
+                    <div class="col-sm-4">
+                        <input asp-for="Tenor" type="number" step="0.01" class="form-control text-end" />
+                    </div>
+
+                    <label asp-for="DSR" class="col-sm-2 col-form-label">DSR (%)</label>
+                    <div class="col-sm-3">
+                        <input asp-for="DSR" type="number" step="0.01" class="form-control text-end" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="SalesName" class="col-sm-3 col-form-label">Sales Name</label>
+                    <div class="col-sm-9">
+                        <input asp-for="SalesName" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Remarks" class="col-sm-3 col-form-label">Remarks</label>
+                    <div class="col-sm-9">
+                        <textarea asp-for="Remarks"
+                                  rows="4"
+                                  class="form-control"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- Buttons -->
+        <!-- ===================================================== -->
+
+        <div class="card">
+            <div class="card-body">
+                <button type="submit" class="btn btn-primary">Save New</button>
+                <a asp-page="Index" class="btn btn-secondary">Bank to List</a>
+            </div>
+        </div>
+
+
+
+
+        <script>
+            function calculateNFA() {
+
+                var originalPrice =
+                    parseFloat(document.getElementById('OriginalPrice').value) || 0;
+
+                var downpayment =
+                    parseFloat(document.getElementById('Downpayment').value) || 0;
+
+                var nfa = originalPrice - downpayment;
+
+                document.getElementById('NFA').value = nfa.toFixed(2);
+            }
+
+            document.getElementById('OriginalPrice')
+                .addEventListener('input', calculateNFA);
+
+            document.getElementById('Downpayment')
+                .addEventListener('input', calculateNFA);
+
+            calculateNFA(); // Initial calculation for Edit page
+        </script>
+
+    </form>
+
+</div>
+
+

@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\applications\New folder\**" />
+    <Content Remove="Pages\applications\New folder\**" />
+    <EmbeddedResource Remove="Pages\applications\New folder\**" />
+    <None Remove="Pages\applications\New folder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\applications\Create - Copy.cshtml.cs" />
+    <Compile Remove="Pages\test\tstApplications.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\applications\Create - Copy.cshtml" />
+    <Content Remove="Pages\Shared\_Layout - Copy.cshtml" />
+    <Content Remove="Pages\test\tstApplications.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Create_old_html_accordion.txt" />
+    <None Remove="Pages\Shared\_Layout.cshtml - Copy.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\GeneralCodes\" />
+    <Folder Include="Pages\test\" />
+    <Folder Include="Pages\users\" />
+    <Folder Include="Pages\properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
+  </ItemGroup>
+
+</Project>

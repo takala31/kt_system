@@ -1,0 +1,107 @@
+﻿@page
+@model kt_system.Pages.GeneralCodes.IndexModel
+
+@{
+    ViewData["Title"] = "General Codes";
+}
+
+<div class="card shadow mx-auto" style="max-width:800px;">
+    <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">General Codes Maintenance</h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="get">
+
+            <div class="row mb-3">
+
+                <div class="col-md-4">
+
+                    <label asp-for="SelectedCategory" class="form-label">
+                        Code Category
+                    </label>
+
+                    <select asp-for="SelectedCategory"
+                            asp-items="Model.Categories"
+                            class="form-select"
+                            onchange="this.form.submit();">
+
+                        <option value="">
+                            -- Select Category --
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-8 text-end">
+                    <a asp-page="Create" asp-route-category="@Model.SelectedCategory" class="btn btn-success">+ New Code</a>
+                </div>
+
+            </div>
+
+        </form>
+
+        @if (Model.Codes.Any())
+        {
+            <div class="table-responsive">
+
+                @* <table class="table table-bordered table-striped table-sm"> *@
+                <table class="table table-sm table-hover mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th style="width:120px;">Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Codes)
+                        {
+                            <tr>
+
+                                <td>@item.Code</td>
+
+                                <td>@item.Description</td>
+
+                                <td>
+                                    <a asp-page="Edit" asp-route-id="@item.GeneralCodeID" class="btn btn-outline-primary btn-sm py-0 px-2">Edit</a>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+        else if (!string.IsNullOrEmpty(Model.SelectedCategory))
+        {
+            <div class="alert alert-warning">
+
+                No records found.
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<style>
+
+    .table-sm td,
+    .table-sm th {
+        padding: 4px 8px !important;
+        vertical-align: middle;
+    }
+
+</style>

@@ -1,0 +1,129 @@
+﻿@page
+@model kt_system.Pages.GeneralCodes.CreateModel
+
+@{
+    ViewData["Title"] = "New General Code";
+}
+
+<style>
+
+    .form-control,
+    .form-select {
+        padding: 2px 6px;
+        min-height: 28px;
+        font-size: 13px;
+    }
+
+    .mb-2 {
+        margin-bottom: 3px !important;
+    }
+
+    label {
+        margin-bottom: 0;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+</style>
+
+<div class="card shadow mx-auto" style="max-width:850px;">
+
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">
+            New General Code
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <form method="post">
+
+            <div asp-validation-summary="All"
+                 class="text-danger"></div>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-2">
+
+                    <label>Category</label>
+
+                    <input asp-for="GC.CodeCategory"
+                           class="form-control" />
+
+                </div>
+
+                <div class="col-md-2 mb-2">
+
+                    <label>Category ID</label>
+
+                    <input asp-for="GC.CodeCategoryID"
+                           class="form-control" />
+
+                </div>
+
+                <div class="col-md-3 mb-2">
+
+                    <label>Code</label>
+
+                    <input asp-for="GC.Code"
+                           class="form-control" />
+
+                </div>
+
+            </div>
+
+            <hr />
+
+            <div class="mb-2">
+                <label>Description</label>
+                <input asp-for="GC.Description" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 2</label>
+                <input asp-for="GC.Description_2" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 3</label>
+                <input asp-for="GC.Description_3" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 4</label>
+                <input asp-for="GC.Description_4" class="form-control" />
+            </div>
+
+            <div class="mb-2">
+                <label>Description 5</label>
+                <input asp-for="GC.Description_5" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label>Remarks</label>
+
+                <textarea asp-for="GC.Remarks"
+                          rows="2"
+                          class="form-control"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-success">
+
+                Save
+
+            </button>
+
+            <a asp-page="./Index"
+               asp-route-SelectedCategory="@Model.GC.CodeCategory"
+               class="btn btn-secondary">
+
+                Back
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
