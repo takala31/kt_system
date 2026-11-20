@@ -12,6 +12,8 @@ namespace kt_system.Pages.GeneralCodes
 
         public void OnGet(string? category = null)
         {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+
             GC.CodeCategory = category;
 
             if (!string.IsNullOrEmpty(category))

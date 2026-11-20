@@ -22,43 +22,63 @@ body {
 }
 
 
-
-
 /* site.css */
-.sidebar-link {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 6px;
-}
-
-    .sidebar-link:hover {
-        color: #ffc107;
-        background: #2f3742;
-    }
-
-
-
 .sidebar {
-    background: #212529;
+    background: #2f5c78; /*#212529;*/
     min-height: 100vh;
 }
 
     .sidebar a {
         color: white;
+        font-size:small;
         text-decoration: none;
+        border-radius: 6px;
+        transition: all .2s ease;
     }
 
         .sidebar a:hover {
             color: #ffc107;
+            background-color: rgba(255,255,255,.1);
         }
 
-.content-area {
-    padding: 20px;
+
+.table-container {
+    max-height: 600px;
+    overflow-y: auto;
 }
 
-.accordion-button:not(.collapsed) {
-    background-color: #0d6efd;
+.table-container th {
+    position: sticky;
+    top: 0;
+    background: #2f5c78;
     color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    z-index: 100;
+}
+
+.table-container td {
+    font-size: 0.85rem;
+}
+
+.dashboard-card {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-3px);
+    }
+
+.card-selected {
+    border: 3px solid #ffc107 !important;
+    box-shadow: 0 0 10px rgba(255,193,7,.4);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+}
+
+.dashboard-card {
+    transition: all .2s;
 }

@@ -4,7 +4,7 @@ namespace kt_system.Models
     public class Application
     {
         // Application Information
-        public int ApplicationID { get; set; }
+        public int AppID { get; set; }
         public string? AppID_usr { get; set; }
         public DateTime AppDate_usr { get; set; }= DateTime.Today;
         public string? AppProduct { get; set; }

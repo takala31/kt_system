@@ -1,0 +1,53 @@
+﻿@* @page
+@model kt_system.Pages.Account.LoginModel
+@{
+
+}
+
+ *@
+
+
+@page
+@model kt_system.Pages.Account.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow-sm" style="max-width:400px;margin:auto;">
+
+        <div class="card-header bg-primary text-white">
+            KT System Login
+        </div>
+
+        <div class="card-body">
+
+            <form method="post">
+
+                <div class="mb-3">
+                    <label>User Name</label>
+                    <input asp-for="UserName"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input asp-for="Password"
+                           type="password"
+                           class="form-control" />
+                </div>
+
+                <button type="submit"
+                        class="btn btn-primary w-100">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

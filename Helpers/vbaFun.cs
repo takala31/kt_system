@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace kt_system.Helpers
 {
@@ -105,8 +106,44 @@ namespace kt_system.Helpers
             return list;
             //var types = DList("SELECT Id, Name FROM LeaveTypes ORDER BY Name");
         }
-        
-        
+
+
+
+        public static DataTable GetDataTable(string sql, Dictionary<string, object>? parameters = null)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connStr))
+                {
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.CommandType = CommandType.Text;
+
+                        if (parameters != null)
+                        {
+                            foreach (var param in parameters)
+                            {
+                                cmd.Parameters.AddWithValue(param.Key, param.Value ?? DBNull.Value);
+                            }
+                        }
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                        adapter.Fill(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in GetDataTable: {ex.Message}");
+                throw;
+            }
+
+            return dt;
+        }
+
+
         public static Dictionary<string, object> DRow(string sql)   //DRow (single row)
         {
             var row = new Dictionary<string, object>();

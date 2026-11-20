@@ -3,23 +3,31 @@
 
 <h2>Customers</h2>
 
-<p>
-    <a asp-page="Create"
-       class="btn btn-success">
-        New Customer
-    </a>
-</p>
+<!--<p><a asp-page="CreateEdit" asp-route-DummyEntry="yes" class="btn btn-success">New Customer</a></p>-->
 
-<table class="table table-bordered table-striped">
+<form method="get" asp-page="CreateEdit" class="d-inline-flex align-items-center gap-3">
+    <button type="submit" class="btn btn-primary btn-sm py-0 px-2 small">New Customer</button>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="dummy" name="DummyEntry" value="yes" />
+        <label class="form-check-label" for="dummy">Dummy entry</label>
+    </div>
+</form>
+
+
+<table class="table table-bordered table-striped table-hover table-sm small">
     <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>AraName</th>
+            <th>DOB</th>
             <th>Nationality</th>
             <th>Mobile</th>
-            <th>Email</th>
+            <th>Emirates ID</th>
+            <th>ID Expiry</th>
+            <th>Pass No</th>
             <th>Status</th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
 
@@ -29,21 +37,18 @@
         {
             <tr>
                 <td>@row["CustomerID"]</td>
-
-                <td>
-                    @row["FirstName"]
-                    @row["LastName"]
-                </td>
-
+                <td>@row["FirstName"] @row["MiddleName"] @row["LastName"] </td>
+                <td>@row["AraName"]</td>
+                <td>@row["DOB"]</td>
                 <td>@row["Nationality"]</td>
                 <td>@row["Mobile"]</td>
-                <td>@row["Email"]</td>
+                <td>@row["EmiratesID"]</td>
+                <td>@row["EmiratesIDExpiry"]</td>
+                <td>@row["PassportNumber"]</td>
                 <td>@row["CustomerStatus"]</td>
-
                 <td>
-                    <a asp-page="Edit" asp-route-id="@row["CustomerID"]" class="btn btn-sm btn-warning">Edit</a>
-                    <a asp-page="Delete" asp-route-id="@row["CustomerID"]" class="btn btn-sm btn-danger">Delete</a>
-                    <!-- <a asp-page="Delete" asp-route-id="@row["CustomerID"]" class="btn btn-sm btn-danger">De-Activate</a> -->
+                    <a asp-page="CreateEdit" asp-route-id="@row["CustomerID"]" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-page="Delete" asp-route-id="@row["CustomerID"]" class="btn btn-sm btn-outline-danger">Del</a>
                 </td>
             </tr>
         }

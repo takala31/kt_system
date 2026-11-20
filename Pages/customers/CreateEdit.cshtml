@@ -1,0 +1,232 @@
+﻿@page
+@model kt_system.Pages.Customers.CreateModel
+
+@{
+    ViewData["Title"] = "New Customer";
+
+    <h2>Customer Form</h2>
+    <form method="post">
+        <input type="hidden" asp-for="Mode" />
+
+        <!--<input type="hidden" asp-for="CustomerID" />-->
+        <!--<input asp-for="CustomerID" readonly />-->
+
+        <!-- Personal Information-->
+        <div class="card ms-3 mb-3  w-75">
+            <div class="card-header bg-primary text-white">
+                Personal Information
+            </div>
+
+            <div class="card-body">         <!-- Personal Information-->
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="CustomerID">Customer ID</label>
+                        <input asp-for="CustomerID" class="form-control bg-light fw-bold" readonly />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="CustomerStatus">Customer Status</label>
+                        <select asp-for="CustomerStatus" class="form-select bg-light fw-bold">
+                            <option value="">-- Select Customer Status--</option>
+                            @foreach (var p in Model.drpCustomerStatus)
+                            {
+                                <option value="@p["CustomerStatus"]">@p["CustomerStatus"]</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="FirstName">First Name</label>
+                        <input asp-for="FirstName" class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="MiddleName">Middle Name</label>
+                        <input asp-for="MiddleName" class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="LastName">Last Name</label>
+                        <input asp-for="LastName" class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="AraName">Ara Name</label>
+                        <input asp-for="AraName" class="form-control bg-light fw-bold" />
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="DOB">Date of Birth</label>
+                        <input asp-for="DOB" type="date" class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Gender">Male/Female</label>
+                        <select asp-for="Gender" class="form-control bg-light fw-bold">
+                            <option value="">Select</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="MaritalStatus">Marital Status</label>
+                        <select asp-for="MaritalStatus" class="form-control bg-light fw-bold">
+                            <option value="">Select</option>
+                            <option>Single</option>
+                            <option>Married</option>
+                            <option>Divorced</option>
+                            <option>Widowed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Nationality">Nationality</label>
+                        <!--<input asp-for="Nationality" class="form-control" />-->
+                        <select asp-for="Nationality" class="form-select bg-light fw-bold">
+                            <option value="">-- Select Nationality--</option>
+                            @foreach (var p in Model.drpNationality)
+                            {
+                                <option value="@p["Nationality"]">@p["Nationality"]</option>
+                            }
+                    </select>
+
+
+                    </div>
+
+                </div>
+            </div>
+            </div>
+
+        <!-- Identity Documents-->
+        <div class="card ms-3 mt-3  w-75">
+            <!-- Identity Documents-->
+                <div class="card-header bg-primary text-white">
+                    Identity Documents
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="EmiratesID"></label>
+                            <input asp-for="EmiratesID"
+                               class="form-control bg-light fw-bold" />
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label asp-for="EmiratesIDExpiry"></label>
+                            <input asp-for="EmiratesIDExpiry"
+                                   type="date"
+                               class="form-control bg-light fw-bold" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="PassportNumber"></label>
+                            <input asp-for="PassportNumber"
+                               class="form-control bg-light fw-bold" />
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label asp-for="PassportExpiry"></label>
+                            <input asp-for="PassportExpiry"
+                                   type="date"
+                               class="form-control bg-light fw-bold" />
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        <!-- Contact Information-->
+        <div class="card ms-3 mt-3  w-75">
+            <div class="card-header bg-primary text-white">
+                Contact Information
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Mobile"></label>
+                        <input asp-for="Mobile"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="AlternateMobile"></label>
+                        <input asp-for="AlternateMobile"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Country"></label>
+                        <input asp-for="Country"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Emirate"></label>
+                        <input asp-for="Emirate"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="City"></label>
+                        <input asp-for="City"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Area"></label>
+                        <input asp-for="Area"
+                               class="form-control bg-light fw-bold" />
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <hr />
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">@(Model.Mode == "New" ? "Save New" : "Save Changes")</button>
+            ___________________________________**___________________________________**___________________________________**___________________________________
+
+            <a asp-page="./Index" class="btn btn-secondary">Customers List</a>
+        </div>
+    </form>
+}
+<!--
+var name = HttpContext.Session.GetString("SaveStatus");
+<button type="submit" class="btn btn-secondary">New</button>
+<button type="submit" class="btn btn-primary">Save New</button>
+<button type="submit" class="btn btn-success">Save Changes</button>
+<button type="submit" class="btn btn-success"> @(Model.CustomerID == 0 ? "Save New" : "Save Changes") </button>
+-->

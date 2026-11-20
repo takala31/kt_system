@@ -14,14 +14,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\vbaFun_2.cs" />
     <Compile Remove="Pages\applications\Create - Copy.cshtml.cs" />
+    <Compile Remove="Pages\customers\Create - Copy.cshtml.cs" />
     <Compile Remove="Pages\test\tstApplications.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Pages\applications\Create - Copy.cshtml" />
+    <Content Remove="Pages\customers\Create - Copy.cshtml" />
     <Content Remove="Pages\Shared\_Layout - Copy.cshtml" />
     <Content Remove="Pages\test\tstApplications.cshtml" />
+    <Content Remove="wwwroot\css\kt_system.css" />
   </ItemGroup>
 
   <ItemGroup>

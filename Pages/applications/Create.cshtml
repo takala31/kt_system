@@ -9,40 +9,48 @@
         <!-- tab header-->
         <ul class="nav nav-tabs mb-3" id="appTabs" role="tablist">
             <li class="nav-item">
-                <div>
-                    <button class="nav-link"
-                            data-bs-toggle="tab"
-                            data-bs-target="#tabApplication"
-                            type="button">Application</button>
-                </div>
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#tabApplication"
+                        type="button">
+                    Application
+                </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link active"
                         data-bs-toggle="tab"
                         data-bs-target="#tabCustomer"
-                        type="button">Customer </button>
+                        type="button">
+                    Customer
+                </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link"
                         data-bs-toggle="tab"
                         data-bs-target="#tabProperty"
-                        type="button">Property Details</button>
+                        type="button">
+                    Property Details
+                </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link"
                         data-bs-toggle="tab"
                         data-bs-target="#tabPropertyAddress"
-                        type="button">Property Address</button>
+                        type="button">
+                    Property Address
+                </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link"
                         data-bs-toggle="tab"
                         data-bs-target="#tabFinance"
-                        type="button">Finance</button>
+                        type="button">
+                    Finance
+                </button>
             </li>
 
         </ul>
@@ -57,6 +65,10 @@
                     </div>
 
                     <div class="card-body">
+                        <div class="row mb-3">
+                            <label asp-for="App.AppID" class="col-sm-3 col-form-label">AppID</label>
+                            <div class="col-sm-4"> <input asp-for="App.AppID" class="form-control" readonly style="background-color: #fff; color: #212529; opacity: 1;" /></div>
+                        </div>
 
                         <div class="row mb-3">
                             <label asp-for="App.AppID_usr" class="col-sm-3 col-form-label">Application No</label>
@@ -153,6 +165,14 @@
                                 <input asp-for="Cust.DOB" type="date" class="form-control" />
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <label asp-for="Cust.AraName" class="col-sm-2 col-form-label">Ara Name</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Cust.AraName" class="form-control" />
+                            </div>
+                        </div>
+
 
                     </div>
 
@@ -371,94 +391,94 @@
                     </div>
                 </div>
             </div>
-                <!-- Property address tab -->
-                <div class="tab-pane fade" id="tabPropertyAddress">
-                    <div class="card shadow-sm mb-3">
-                        <div class="card-header bg-primary text-white">Property Address Details</div>
+            <!-- Property address tab -->
+            <div class="tab-pane fade" id="tabPropertyAddress">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header bg-primary text-white">Property Address Details</div>
 
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <div class="row mb-3">
+                        <div class="row mb-3">
                             <label asp-for="Prop.LotNo" class="col-sm-2 col-form-label">Lot No</label>
-                                <div class="col-sm-4">
+                            <div class="col-sm-4">
                                 <input asp-for="Prop.LotNo" class="form-control" />
-                                </div>
+                            </div>
 
                             <label asp-for="Prop.PlotNo" class="col-sm-2 col-form-label">Plot No</label>
-                                <div class="col-sm-3">
+                            <div class="col-sm-3">
                                 <input asp-for="Prop.PlotNo" class="form-control" />
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="row mb-3">
+                        <div class="row mb-3">
                             <label asp-for="Prop.TitleDeedNo" class="col-sm-2 col-form-label">Title Deed No</label>
-                                <div class="col-sm-4">
+                            <div class="col-sm-4">
                                 <input asp-for="Prop.TitleDeedNo" class="form-control" />
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="row mb-3">
+                        <div class="row mb-3">
                             <label asp-for="Prop.VillaAptNo" class="col-sm-2 col-form-label">Villa / Apt No</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.VillaAptNo" class="form-control" />
-                                </div>
-
-                                <label asp-for="Prop.BuildingCompoundName" class="col-sm-2 col-form-label">Building / Compound</label>
-                                <div class="col-sm-3">
-                                    <input asp-for="Prop.BuildingCompoundName" class="form-control" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.VillaAptNo" class="form-control" />
                             </div>
 
-                            <div class="row mb-3">
+                            <label asp-for="Prop.BuildingCompoundName" class="col-sm-2 col-form-label">Building / Compound</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.BuildingCompoundName" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label asp-for="Prop.StreetName" class="col-sm-2 col-form-label">Street Name</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.StreetName" class="form-control" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.StreetName" class="form-control" />
                             </div>
+                        </div>
 
-                            <div class="row mb-3">
+                        <div class="row mb-3">
                             <label asp-for="Prop.Country" class="col-sm-2 col-form-label">Country</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.Country" class="form-control" />
-                                </div>
-
-                                <label asp-for="Prop.Emirate" class="col-sm-2 col-form-label">Emirate</label>
-                                <div class="col-sm-3">
-                                    <input asp-for="Prop.Emirate" class="form-control" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.Country" class="form-control" />
                             </div>
 
-                            <div class="row mb-3">
+                            <label asp-for="Prop.Emirate" class="col-sm-2 col-form-label">Emirate</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.Emirate" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label asp-for="Prop.AreaName" class="col-sm-2 col-form-label">Area Name</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.AreaName" class="form-control" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.AreaName" class="form-control" />
                             </div>
+                        </div>
 
-                            <div class="row mb-3">
+                        <div class="row mb-3">
                             <label asp-for="Prop.LandArea" class="col-sm-2 col-form-label">Land Area</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.LandArea" class="form-control text-end" />
-                                </div>
-
-                                <label asp-for="Prop.BuiltupArea" class="col-sm-2 col-form-label">Built-up Area</label>
-                                <div class="col-sm-3">
-                                    <input asp-for="Prop.BuiltupArea" class="form-control text-end" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.LandArea" class="form-control text-end" />
                             </div>
 
-                            <div class="row mb-3">
+                            <label asp-for="Prop.BuiltupArea" class="col-sm-2 col-form-label">Built-up Area</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.BuiltupArea" class="form-control text-end" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label asp-for="Prop.PropertyValuePerUnit" class="col-sm-2 col-form-label">Value Per Unit</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.PropertyValuePerUnit" class="form-control text-end" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.PropertyValuePerUnit" class="form-control text-end" />
                             </div>
+                        </div>
 
-                            <hr />
+                        <hr />
 
-                            <div class="row mb-3 mt-3">
+                        <div class="row mb-3 mt-3">
                             <label asp-for="Prop.RegistrationType" class="col-sm-2 col-form-label">Registration Type</label>
-                                <div class="col-sm-4">
+                            <div class="col-sm-4">
                                 <select asp-for="Prop.RegistrationType" class="form-select">
                                     <option value="">-- Select Registration Type--</option>
                                     @foreach (var p in Model.drpRegistrationType)
@@ -467,13 +487,13 @@
                                     }
                                 </select>
 
-                                </div>
+                            </div>
 
                             <label asp-for="Prop.RegistrationNumber" class="col-sm-2 col-form-label">Registration No</label>
-                                <div class="col-sm-3">
-                                    <input asp-for="Prop.RegistrationNumber" class="form-control" />
-                                </div>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.RegistrationNumber" class="form-control" />
                             </div>
+                        </div>
 
                         <div class="row mb-3">
                             <label asp-for="Prop.RegisteredOnNameOf" class="col-sm-2 col-form-label">Registered On Name Of</label>
@@ -493,21 +513,21 @@
 
 
 
-                            <div class="row mb-3">
+                        <div class="row mb-3">
                             <label asp-for="Prop.RegistrationDate" class="col-sm-2 col-form-label">Registration Date</label>
-                                <div class="col-sm-4">
-                                    <input asp-for="Prop.RegistrationDate" type="date" class="form-control" />
-                                </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Prop.RegistrationDate" type="date" class="form-control" />
+                            </div>
 
-                                <label asp-for="Prop.IssuedFrom" class="col-sm-2 col-form-label">Issued From</label>
-                                <div class="col-sm-3">
-                                    <input asp-for="Prop.IssuedFrom" class="form-control" />
-                                </div>
+                            <label asp-for="Prop.IssuedFrom" class="col-sm-2 col-form-label">Issued From</label>
+                            <div class="col-sm-3">
+                                <input asp-for="Prop.IssuedFrom" class="form-control" />
                             </div>
                         </div>
                     </div>
-
                 </div>
+
+            </div>
 
 
 
