@@ -61,34 +61,19 @@ namespace kt_system.Pages.Account
             if (dt.Rows.Count == 0)
             {
                 TempData["alertColor"] = "danger";
-                TempData["alertMessage"] =
-                    "Invalid Username or Password.";
+                TempData["alertMessage"] ="Invalid Username or Password.";
 
                 return Page();
             }
 
             DataRow r = dt.Rows[0];
 
-            HttpContext.Session.SetString(
-                "UserID",
-                r["UserID"].ToString());
-
-            HttpContext.Session.SetString(
-                "UserName",
-                r["UserName"].ToString());
-
-            HttpContext.Session.SetString(
-                "FullName",
-                r["FullName"].ToString());
-
-            HttpContext.Session.SetString(
-                "UserRole",
-                r["UserRole"].ToString());
-
+            HttpContext.Session.SetString("UserID", r["UserID"].ToString());
+            HttpContext.Session.SetString("UserName",r["UserName"].ToString());
+            HttpContext.Session.SetString("FullName",r["FullName"].ToString());
+            HttpContext.Session.SetString("UserRole",r["UserRole"].ToString());
             TempData["alertColor"] = "success";
-            TempData["alertMessage"] =
-                "Welcome back " +
-                r["FullName"].ToString();
+            TempData["alertMessage"] ="Welcome back " + r["FullName"].ToString();
 
             return RedirectToPage("/Applications/Index");
         }

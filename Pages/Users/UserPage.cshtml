@@ -1,0 +1,78 @@
+﻿@page "{id:int?}"
+@model kt_system.Pages.Users.UserPageModel
+@{
+    ViewData["Title"] = Model.UserID == 0 ? "New User" : "Edit User";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-danger">@Model.Message</div>
+}
+
+<form method="post">
+    <input type="hidden" asp-for="UserID" />
+
+    <!-- Account Information -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">Account Information</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">User Name</label>
+                    <input asp-for="UserName" class="form-control bg-light fw-bold" maxlength="50" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">
+                        Password @(Model.UserID == 0 ? "" : "(blank = keep current)")
+                    </label>
+                    <input asp-for="Password" type="password" class="form-control bg-light fw-bold" autocomplete="new-password" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Role</label>
+                    <select asp-for="UserRole" asp-items="new SelectList(Model.Roles)" class="form-select bg-light fw-bold">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Status</label>
+                    <select asp-for="UserStatus" asp-items="new SelectList(Model.Statuses)" class="form-select bg-light fw-bold"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personal Information -->
+    <div class="card mb-3">
+        <div class="card-header bg-primary text-white">Personal Information</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Full Name</label>
+                    <input asp-for="FullName" class="form-control bg-light fw-bold" maxlength="100" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control bg-light fw-bold" maxlength="100" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Manager</label>
+                    <select asp-for="UserManager" asp-items="new SelectList(Model.Managers)" class="form-select bg-light fw-bold">
+                        <option value="">-- None --</option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Remarks</label>
+                    <textarea asp-for="Remarks" class="form-control bg-light fw-bold" rows="3" maxlength="1000"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mb-4">
+        <button type="submit" class="btn btn-primary px-4">Save</button>
+        <a asp-page="Index" class="btn btn-secondary px-4">Cancel</a>
+    </div>
+</form>
