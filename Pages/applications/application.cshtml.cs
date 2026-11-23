@@ -4,7 +4,9 @@ using KT_System.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 using System.Diagnostics.Metrics;
+using System.Numerics;
 using System.Security.Cryptography;
 
 namespace kt_system.Pages.Applications
@@ -31,7 +33,8 @@ namespace kt_system.Pages.Applications
         public List<SelectListItem> CustomerList { get; set; } = new();
         [BindProperty] public string Mode { get; set; } = "";
 
-        //public bool IsEditMode = false;
+        public DataTable dtLog { get; set; } = new();
+
         //====================================================================================================================================
         //                                                  GET handler for form opening
         //====================================================================================================================================
@@ -137,7 +140,8 @@ namespace kt_system.Pages.Applications
             //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Account/Login"); return;}
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Index?login=1"); return;}
 
-            
+            dtLog = DaoHelper.GetDataTable($"SELECT * FROM AppLog WHERE AppID = {id} ORDER BY ChangedDate DESC");
+
             LoadPageData();
 
             Mode = mode;
@@ -319,6 +323,7 @@ namespace kt_system.Pages.Applications
                         WHERE AppID={App.AppID}";
 
                 DaoHelper.DExecute(sqlEdit);
+                AppLogHelper(App.AppID, "UPDATE");
 
                 TempData["alertColor"] = "success";
                 TempData["alertMessage"] = "Changes saved successfully.";
@@ -479,16 +484,180 @@ namespace kt_system.Pages.Applications
                 )";
 
                     DaoHelper.DExecute(sqlInsert);
+                    AppLogHelper(App.AppID, "CREATE");
+
 
                     TempData["alertColor"] = "success";
                     TempData["alertMessage"] = "New application added successfully.";
                     return RedirectToPage(new{id = App.AppID,mode = "Edit"});
-                    //return RedirectToPage("Index");
                 #endregion
             }
             //else
             throw new Exception("Invalid Mode: " + Mode);
         }
+
+        private void AppLogHelper (BigInteger AppId, string LogAction)
+            {
+                string LogChangedBy =HttpContext.Session.GetString("UserName") ?? "";                   
+                if (AppId <= 0) return;
+
+                string sql = $@"INSERT INTO AS_Entries_Log
+                (
+                    Action,
+                    ChangedBy,
+                    ChangedDate,
+                    AppID,
+                    AppID_UNI,
+                    AppID_usr,
+                    AppDate_usr,
+                    AppProduct,
+                    Stage,
+                    FirstName,
+                    MiddleName,
+                    LastName,
+                    AraName,
+                    DOB,
+                    CustomerAge,
+                    Nationality,
+                    CustomerType,
+                    Employer,
+                    EmployerCatg,
+                    EmployerActivity,
+                    Salary,
+                    DOJ,
+                    LOS,
+                    BankingWith,
+                    AccountNumber,
+                    CarType,
+                    CarBrand,
+                    CarModel,
+                    CarAgency,
+                    PropertyType,
+                    PropertyDesc,
+                    MortgageDegree,
+                    MasterDevelopmentName,
+                    MasterDeveloperName,
+                    ProjectName,
+                    DeveloperName,
+                    BuildingName,
+                    OriginalPropertyValue,
+                    AppraisalValue,
+                    AppraisalBy,
+                    AppraisalDate,
+                    PropertyStatus,
+                    DateOfCompletion,
+                    LotNo,
+                    PlotNo,
+                    TitleDeedNo,
+                    LandArea,
+                    BuiltupArea,
+                    PropertyValuePerUnit,
+                    RegistrationType,
+                    RegistrationNumber,
+                    RegisteredOnNameOf,
+                    Relation,
+                    RegistrationDate,
+                    IssuedFrom,
+                    VillaAptNo,
+                    BuildingCompoundName,
+                    StreetName,
+                    Country,
+                    Emirate,
+                    AreaName,
+                    OriginalPrice,
+                    Downpayment,
+                    NFA,
+                    ProfitRate,
+                    Tenor,
+                    DSR,
+                    SalesName,
+                    Remarks,
+                    CreatedBy,
+                    CreatedOn,
+                    LastUpdatedBy,
+                    LastUpdatedOn,
+                    CustomerID
+                )
+                SELECT
+                    '{LogAction}',
+                    '{LogChangedBy}',
+                    GETDATE(),
+                    AppID,
+                    AppID_UNI,
+                    AppID_usr,
+                    AppDate_usr,
+                    AppProduct,
+                    Stage,
+                    FirstName,
+                    MiddleName,
+                    LastName,
+                    AraName,
+                    DOB,
+                    CustomerAge,
+                    Nationality,
+                    CustomerType,
+                    Employer,
+                    EmployerCatg,
+                    EmployerActivity,
+                    Salary,
+                    DOJ,
+                    LOS,
+                    BankingWith,
+                    AccountNumber,
+                    CarType,
+                    CarBrand,
+                    CarModel,
+                    CarAgency,
+                    PropertyType,
+                    PropertyDesc,
+                    MortgageDegree,
+                    MasterDevelopmentName,
+                    MasterDeveloperName,
+                    ProjectName,
+                    DeveloperName,
+                    BuildingName,
+                    OriginalPropertyValue,
+                    AppraisalValue,
+                    AppraisalBy,
+                    AppraisalDate,
+                    PropertyStatus,
+                    DateOfCompletion,
+                    LotNo,
+                    PlotNo,
+                    TitleDeedNo,
+                    LandArea,
+                    BuiltupArea,
+                    PropertyValuePerUnit,
+                    RegistrationType,
+                    RegistrationNumber,
+                    RegisteredOnNameOf,
+                    Relation,
+                    RegistrationDate,
+                    IssuedFrom,
+                    VillaAptNo,
+                    BuildingCompoundName,
+                    StreetName,
+                    Country,
+                    Emirate,
+                    AreaName,
+                    OriginalPrice,
+                    Downpayment,
+                    NFA,
+                    ProfitRate,
+                    Tenor,
+                    DSR,
+                    SalesName,
+                    Remarks,
+                    CreatedBy,
+                    CreatedOn,
+                    LastUpdatedBy,
+                    LastUpdatedOn,
+                    CustomerID
+                FROM AS_Entries
+                WHERE AppID= " + App.AppID;
+
+                        DaoHelper.DExecute(sql);
+                    }
 
 
         private List<string> ValidateApplication()

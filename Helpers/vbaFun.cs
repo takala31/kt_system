@@ -78,7 +78,6 @@ namespace kt_system.Helpers
 
             return affected;   // number of rows affected
         }
-
         
         public static List<Dictionary<string, object>> DList(string sql)    //DList (multiple rows)
         {
@@ -106,7 +105,6 @@ namespace kt_system.Helpers
             return list;
             //var types = DList("SELECT Id, Name FROM LeaveTypes ORDER BY Name");
         }
-
 
 
         public static DataTable GetDataTable(string sql, Dictionary<string, object>? parameters = null)
@@ -175,7 +173,194 @@ namespace kt_system.Helpers
 }
 
 
+//public static int ExecuteXXX(string sql, object parameters = null)
+//{
+//    using SqlConnection conn = new(_connStr);
+//    conn.Open();
 
+//    return conn.Execute(sql, parameters);
+//}
+
+//AppLogHelper
+/*
+        public static class AppLogHelper
+        {
+            public static void Write(int appId,string action,string changedBy)
+            {
+                if (appId <= 0)
+                    return;
+
+                    string sql = @"INSERT INTO AS_Entries_Log
+                    (
+                        Action,
+                        ChangedBy,
+                        ChangedDate,
+                        AppID,
+                        AppID_UNI,
+                        AppID_usr,
+                        AppDate_usr,
+                        AppProduct,
+                        Stage,
+                        FirstName,
+                        MiddleName,
+                        LastName,
+                        AraName,
+                        DOB,
+                        CustomerAge,
+                        Nationality,
+                        CustomerType,
+                        Employer,
+                        EmployerCatg,
+                        EmployerActivity,
+                        Salary,
+                        DOJ,
+                        LOS,
+                        BankingWith,
+                        AccountNumber,
+                        CarType,
+                        CarBrand,
+                        CarModel,
+                        CarAgency,
+                        PropertyType,
+                        PropertyDesc,
+                        MortgageDegree,
+                        MasterDevelopmentName,
+                        MasterDeveloperName,
+                        ProjectName,
+                        DeveloperName,
+                        BuildingName,
+                        OriginalPropertyValue,
+                        AppraisalValue,
+                        AppraisalBy,
+                        AppraisalDate,
+                        PropertyStatus,
+                        DateOfCompletion,
+                        LotNo,
+                        PlotNo,
+                        TitleDeedNo,
+                        LandArea,
+                        BuiltupArea,
+                        PropertyValuePerUnit,
+                        RegistrationType,
+                        RegistrationNumber,
+                        RegisteredOnNameOf,
+                        Relation,
+                        RegistrationDate,
+                        IssuedFrom,
+                        VillaAptNo,
+                        BuildingCompoundName,
+                        StreetName,
+                        Country,
+                        Emirate,
+                        AreaName,
+                        OriginalPrice,
+                        Downpayment,
+                        NFA,
+                        ProfitRate,
+                        Tenor,
+                        DSR,
+                        SalesName,
+                        Remarks,
+                        CreatedBy,
+                        CreatedOn,
+                        LastUpdatedBy,
+                        LastUpdatedOn,
+                        CustomerID
+                    )
+                    SELECT
+                        @Action,
+                        @ChangedBy ,
+                        GETDATE(),
+                        AppID,
+                        AppID_UNI,
+                        AppID_usr,
+                        AppDate_usr,
+                        AppProduct,
+                        Stage,
+                        FirstName,
+                        MiddleName,
+                        LastName,
+                        AraName,
+                        DOB,
+                        CustomerAge,
+                        Nationality,
+                        CustomerType,
+                        Employer,
+                        EmployerCatg,
+                        EmployerActivity,
+                        Salary,
+                        DOJ,
+                        LOS,
+                        BankingWith,
+                        AccountNumber,
+                        CarType,
+                        CarBrand,
+                        CarModel,
+                        CarAgency,
+                        PropertyType,
+                        PropertyDesc,
+                        MortgageDegree,
+                        MasterDevelopmentName,
+                        MasterDeveloperName,
+                        ProjectName,
+                        DeveloperName,
+                        BuildingName,
+                        OriginalPropertyValue,
+                        AppraisalValue,
+                        AppraisalBy,
+                        AppraisalDate,
+                        PropertyStatus,
+                        DateOfCompletion,
+                        LotNo,
+                        PlotNo,
+                        TitleDeedNo,
+                        LandArea,
+                        BuiltupArea,
+                        PropertyValuePerUnit,
+                        RegistrationType,
+                        RegistrationNumber,
+                        RegisteredOnNameOf,
+                        Relation,
+                        RegistrationDate,
+                        IssuedFrom,
+                        VillaAptNo,
+                        BuildingCompoundName,
+                        StreetName,
+                        Country,
+                        Emirate,
+                        AreaName,
+                        OriginalPrice,
+                        Downpayment,
+                        NFA,
+                        ProfitRate,
+                        Tenor,
+                        DSR,
+                        SalesName,
+                        Remarks,
+                        CreatedBy,
+                        CreatedOn,
+                        LastUpdatedBy,
+                        LastUpdatedOn,
+                        CustomerID
+                    FROM AS_Entries
+                    WHERE AppID = @AppID";
+
+                DaoHelper.Execute(sql,new {AppID = appId,Action = action,ChangedBy = changedBy});
+            }
+        }
+
+*/
+
+
+
+//public static int Execute(string sql)
+//{
+//    using SqlConnection conn = new(_connStr);
+//    conn.Open();
+//    using SqlCommand cmd = new(sql, conn);
+
+//    return cmd.ExecuteNonQuery();
+//}
 
 /*
     DList — Full Implementation

@@ -1,5 +1,6 @@
 ﻿@page "{id:int?}"
 @model kt_system.Pages.Applications.applicationModel
+@using System.Data
 
 <!-- Main container -->
 <div class="container mt-3">
@@ -140,6 +141,47 @@
 
                     </div>
                 </div>
+
+               <!-- #Application LOG--> 
+                @if (Model.dtLog.Rows.Count > 0)
+                {
+                    <div class="card mt-4">
+                        <div class="card-header py-2">
+                            <strong>History</strong>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <table class="table table-sm table-hover mb-2" style="font-size:.65rem;">
+                                @* <table class="table table-sm table-striped mb-0"> *@
+                                <thead>
+                                    <tr>
+                                        <th>AppId</th>
+                                        <th>Stage</th>
+                                        <th>ChangeDate</th>
+                                        <th>ChangedBy</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (DataRow row in Model.dtLog.Rows)
+                                    {
+                                        <tr>
+                                            <td>@row["AppId"]</td>
+                                            <td>@row["Stage"]</td>
+                                            <td>@row["ChangedDate"]</td>
+                                            <td>@row["ChangedBy"]</td>
+                                            <td>@row["Action"]</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                }
+            <!-- #endregion -->
+
 
             </div>
 
@@ -598,9 +640,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
+        </div> 
         <!-- ===================================================== -->
         <!-- Buttons -->
         <!-- ===================================================== -->

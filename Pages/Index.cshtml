@@ -10,39 +10,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <title>Document</title>
+    <title>KT Supporting Systems</title>
 </head>
+
 <body>
+
+    @{
+        var LoggedName= HttpContext.Session.GetString("FullName");
+        var LoggedRole= HttpContext.Session.GetString("UserRole");
+    }
+
+    <!-- Alert Message-->
+    @if (TempData["alertMessage"] != null)
+    {
+     <div id="alertMessage" class="alert alert-@(TempData["alertColor"])">@Html.Raw(TempData["alertMessage"])</div>
+    }
 
     @if (Request.Query["login"] == "1")
     {
         <script>
-            window.onload = function () {
-                new bootstrap.Modal(
-                    document.getElementById('loginModal')
-                ).show();
+            window.onload = function () 
+            {
+                new bootstrap.Modal(document.getElementById('loginModal')).show();
             };
         </script>
     }
 
     <div class="card shadow-sm mb-3" style="background-color: #2f5c78;">
         <div class="card-body text-center pb-0">
-            <h1 class="display-5 fw-bold text-white mb-0">KT System</h1>
+            <h1 class="display-5 text-white mb-0">
+                <span class="fw-bold">KT System</span>
+                <span class="text-white fw-light" style="font-size:.6rem;">
+                    Version 1.0
+                </span>
+            </h1>
+            @* <h1 class="display-5 fw-bold text-white mb-0">KT System
+            <span class="text-white" style="font-size: .6rem; font-weight:normal">Version 1.0 </span>
+            </h1>
+             *@
+
+
 
             <p class="text-muted mb-0" style="font-size: .9rem; -webkit-text-fill-color: goldenrod;">Customer, Property & Finance Management Platform</p>
             <div class="mb-0">
-                <a class="btn btn btn-outline-secondary btn-sm me-2" asp-page="/Applications/Create">New Application</a>
+                <a class="btn btn btn-outline-secondary btn-sm me-2" asp-page="/Applications/Application">New Application</a>
                 <a class="btn btn-outline-secondary btn-sm me-2" asp-page="/Customers/Index">Customers</a>
                 <a class="btn btn-outline-secondary btn-sm me-2" asp-page="/Properties/Index">Properties</a>
             </div>
             <div class="mb-0" style="display: flex; justify-content: space-between;">
-                <span class="text-white" style="font-size: .6rem;">Welcome, @User.Identity?.Name | Version 1.0.0</span>
-                @* <span><a href="https://ktblog2-j0kdk.sevalla.page/my_career_bs.html" style="font-size: .6rem"; target="_blank">Learn more about KT</a></span> *@
+                <span class="text-white" style="font-size: .6rem;">Welcome, @LoggedName - @LoggedRole | Version 1.0.0 </span>
+
                 <span>
-                    @* <a href="https://ktblog2-j0kdk.sevalla.page/my_career_bs.html" target="_blank" style="font-size:.6rem; color:#ffffff;"> Learn more about KT</a> *@
-                    @* <a asp-page="/Account/Login" target="_blank" style="font-size:.8rem; color:#ffffff;">Login</a> *@
-                    @* <a asp-page="/Account/Login" target="_blank" style="font-size:.8rem; color:#ffffff;">Login</a> *@
-                    <a href="#" data-bs-toggle="modal" style="font-size:.8rem; color:#ffffff;" data-bs-target="#loginModal">Login</a>
+                    @if (string.IsNullOrEmpty(@LoggedName))
+                    {
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" style="font-size:.8rem; color:#ffffff;">Login</a>
+                    }
+                    else
+                    {
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" style="font-size:.8rem; color:#ffffff;">Logout</a>
+                    }
                 </span>
             </div>
         </div>
@@ -84,21 +110,21 @@
                 </div>
 
                 <div class="modal-body">
-                    <form method="post">
 
-                        <div class="mb-3">
-                            <label>User Name</label>
-                            <input type="text" class="form-control" name="UserName">
-                        </div>
+                                <form method="post">
+                                    <div class="mb-3">
+                                        <label>User Name</label>
+                                        <input type="text" class="form-control" name="UserName" required>
+                                    </div>
 
-                        <div class="mb-3">
-                            <label>Password</label>
-                            <input type="password" class="form-control" name="Password">
-                        </div>
+                                    <div class="mb-3">
+                                        <label>Password</label>
+                                        <input type="password" class="form-control" name="Password" required >
+                                    </div>
 
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                                </form>
 
-                    </form>
                 </div>
             </div>
         </div>
@@ -164,4 +190,5 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>setTimeout(function () {document.getElementById('alertMessage')?.remove();}, 3000);</script>
 
