@@ -140,7 +140,7 @@ namespace kt_system.Pages.Applications
             //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Account/Login"); return;}
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Index?login=1"); return;}
 
-            dtLog = DaoHelper.GetDataTable($"SELECT * FROM AppLog WHERE AppID = {id} ORDER BY ChangedDate DESC");
+            if (id.HasValue) dtLog = DaoHelper.GetDataTable($"SELECT * FROM AppLog WHERE AppID = {id} ORDER BY ChangedDate DESC");
 
             LoadPageData();
 
