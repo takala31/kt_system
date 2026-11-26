@@ -82,3 +82,9 @@ body {
 .dashboard-card {
     transition: all .2s;
 }
+
+.audit-info {
+    font-size: 11px;
+    color: #6c757d;
+    white-space: nowrap;
+}

@@ -167,8 +167,28 @@ namespace kt_system.Helpers
             //string emp = row["EmpId"].ToString();
         }
 
+        public static List<string> GetCodes_LINQ(string category)
+        {
+            return DaoHelper.GetDataTable($"SELECT Code FROM AS_GeneralCodes WHERE Category='{category}'") 
+                .AsEnumerable()
+                .Select(r => r["Code"].ToString())
+                .ToList();
+        }
 
 
+        public static List<string> GetCodes(string category)
+        {
+            List<string> list = new List<string>();
+
+            DataTable dt = DaoHelper.GetDataTable($"SELECT Code FROM GeneralCodes WHERE CodeCategory='{category}'");
+
+            foreach (DataRow r in dt.Rows)
+            {
+                list.Add(r["Code"].ToString()!);
+            }
+
+            return list;
+        }
     }
 }
 

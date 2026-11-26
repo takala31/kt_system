@@ -10,38 +10,73 @@
 </head>
 
 
+
+    @{
+          var LoggedName = Context.Session.GetString("FullName");
+          var LoggedRole = Context.Session.GetString("UserRole");
+    }
+
 <body>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
             <div class="col-md-2 sidebar bg- text-white mt-4">
                 <div class="p-3">
-                    <h4>KT System</h4>
+                    <h3>KT System<span class="text-yellow" style="font-size:.6rem;"> Version 1.0</span> </h3>
+
+                    @if (string.IsNullOrEmpty(LoggedName))
+                    {
+                        <span class="text-white" style="font-size:.6rem;">Not loggedin</span>
+                    }
+                    else
+                    {
+                        <span class="text-white" style="font-size:.6rem;">Welcome, @LoggedName (@LoggedRole)</span>
+                    }
+
+                    @* <span class="text-white" style="font-size:.6rem;">Welcome, @LoggedName - @LoggedRole |Version 1.0</span> *@
+                    @* <span class="text-white" style="font-size:.6rem;">Welcome, @LoggedName - @LoggedRole<br />Version 1.0.0</span> *@
+                    @* <span class="text-white" style="font-size: .6rem;">Welcome, @LoggedName - @LoggedRole | Version 1.0.0 </span> *@
                     <hr />
                     <ul class="nav flex-column">
-@*                         <li class="nav-item">
-                            <a class="nav-link sidebar-link" asp-page="/Welcome">Welcome Page</a>
-                        </li> *@
-                        <li class="nav-item">
-                            <a class="nav-link sidebar-link" asp-page="/Applications/Index">Applications</a>
+                        <li class="nav-item">                                           
+                            <a class="nav-link sidebar-link" asp-page="/Applications/ApplicationIndex">Applications</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link sidebar-link" asp-page="/Customers/Index">Customers</a>
+                            <a class="nav-link sidebar-link" asp-page="/Customers/CustomerIndex">Customers</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link sidebar-link" asp-page="/Users/UserIndex">Users</a>
-                        </li>
-                        
+
+
+                        @if (LoggedRole == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link sidebar-link" asp-page="/Users/UserIndex">Users</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link sidebar-link" asp-page="/GeneralCodes/Index">General Codes</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link sidebar-link" asp-page="/Properties/Index">Properties</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link sidebar-link" asp-page="/GeneralCodes/Index">General Codes</a>
-                        </li>
 
                         <li class="nav-item">
-                            <a class="nav-link sidebar-link" asp-page="/Account/Logout">Logout</a>
+                            <a class="nav-link sidebar-link" asp-page="/Index">Welcome Page</a>
                         </li>
+
+                        @if (String.IsNullOrEmpty(Context.Session.GetString("UserRole")))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link sidebar-link" asp-page="/Account/Login">Login</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link sidebar-link" asp-page="/Account/Logout">Logout</a>
+                            </li>
+                        }
 
                         <!-- Bootstrap with sub-menu -->
                         <li class="nav-item">

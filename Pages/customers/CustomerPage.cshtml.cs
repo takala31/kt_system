@@ -7,7 +7,7 @@ using System.Data;
 
 namespace kt_system.Pages.Customers
 {
-    public class CreateModel : PageModel
+    public class CustomerPageModel : PageModel
     {
         [BindProperty]
         public int CustomerID { get; set; }
@@ -60,12 +60,19 @@ namespace kt_system.Pages.Customers
         public void OnGet(int? id, string? DummyEntry)
         {
             //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Account/Login"); return;}
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                HttpContext.Session.SetString("RequestingPage", "/customers/CustomerIndex");
+                Response.Redirect("/Index?login=1"); return;
+            }
 
             LoadPageData();
             CustomerID = Convert.ToInt32(DaoHelper.DMax("CustomerID", "Customers", "1=1"))+1;
             Mode = HttpContext.Session.GetString("SaveStatus");
 
+            DummyEntry = "yes";
             if (id == null)
             {
                 Mode = "New";
@@ -280,7 +287,7 @@ namespace kt_system.Pages.Customers
 
             DaoHelper.DExecute(sql);
 
-            return RedirectToPage("Index");
+            return RedirectToPage("/Customers/CustomerIndex");
         }
 
 

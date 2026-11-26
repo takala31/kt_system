@@ -14,17 +14,13 @@ namespace kt_system.Pages.Customers
 
         public IActionResult OnGet(int? id)
         {
-            if (id == null)
-                return RedirectToPage("./Index");
+            if (id == null) return RedirectToPage("/Customers/CustomerIndex");
 
-            string sql = $@"SELECT * FROM Customers WHERE CustomerID = {id}"; 
+            string sql = $@"SELECT * FROM Customers WHERE CustomerID = {id}";
             var rows = DaoHelper.DList(sql);
-
-            if (rows.Count == 0)
-                return RedirectToPage("./Index");
+            if (rows.Count == 0) return RedirectToPage("/Customers/CustomerIndex");
 
             var row = rows[0];
-
             CustomerID = Convert.ToInt32(row["CustomerID"]);
             FirstName = row["FirstName"]?.ToString();
             LastName = row["LastName"]?.ToString();
@@ -35,10 +31,10 @@ namespace kt_system.Pages.Customers
         public IActionResult OnPost()
         {
             string sql = $@"DELETE FROM Customers WHERE CustomerID = {CustomerID}";
-            //string sql = $@"UPDATE Customers SET IsActive = 0 WHERE CustomerID = {CustomerID}";
+            //string sql = $@"UPDATE Customers SET IsActive = 0, CustomerStatus='inactive' WHERE CustomerID = {CustomerID}";
             DaoHelper.DExecute(sql);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Customers/CustomerIndex");
         }
     }
 }

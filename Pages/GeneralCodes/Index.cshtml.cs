@@ -17,7 +17,12 @@ namespace kt_system.Pages.GeneralCodes
 
         public void OnGet()
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Index?login=1"); return; }
+            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Index?login=1"); return; }
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                HttpContext.Session.SetString("RequestingPage", "/GeneralCodes/index");
+                Response.Redirect("/Index?login=1"); return;
+            }
 
             LoadCategories();
 

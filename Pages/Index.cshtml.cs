@@ -95,15 +95,15 @@ namespace kt_system.Pages
             HttpContext.Session.SetString("UserName", r["UserName"].ToString());
             HttpContext.Session.SetString("FullName", r["FullName"].ToString());
             HttpContext.Session.SetString("UserRole", r["UserRole"].ToString());
-            //TempData["alertColor"] = "success";
-            //TempData["alertMessage"] = "Welcome back " + r["FullName"].ToString();
-            //return RedirectToPage("/Applications/Index");
-            return RedirectToPage("/Index");
+
+            string RequestingPage = HttpContext.Session.GetString("RequestingPage")?? "";
+            return RedirectToPage(RequestingPage);
+            //return RedirectToPage("/Index");
         }
 
         public void OnGet()
         {
-
+            //HttpContext.Session.SetString("UserName", "any thing for temp login!!");
         }
 
         //public IActionResult OnPost()

@@ -1,3 +1,4 @@
+using kt_system.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,20 +23,25 @@ namespace kt_system.Pages.Users
         [BindProperty] public string UserRole { get; set; }
         [BindProperty] public string UserManager { get; set; }
         [BindProperty] public string Email { get; set; }
-        [BindProperty] public string UserStatus { get; set; } = "Active";
+        [BindProperty] public string UserStatus { get; set; }
         [BindProperty] public string Remarks { get; set; }
 
         // dropdown lists
-        public List<string> Roles { get; set; } = new List<string> { "Admin", "Manager", "User" };
-        public List<string> Statuses { get; set; } = new List<string> { "Active", "Inactive", "Locked","Resigned","Terminated","OnHold" };
+        //public List<string> Roles { get; set; } = new List<string> { "Admin", "Manager", "User" };
+        //public List<string> Statuses { get; set; } = new List<string> { "Active", "Inactive", "Locked","Resigned","Terminated","OnHold" };
         public List<string> Managers { get; set; } = new List<string>();
-
+        public List<Dictionary<string, object>> drpPropertyStatus { get; set; } = new();
         public string Message { get; set; }
+
+
+        public List<string> drpUserRoles { get; set; } = new();
+        public List<string> drpUserStatus { get; set; } = new();
 
         // id = null  -> new user,  id = 5 -> edit user 5
         public void OnGet(int? id)
         {
             LoadManagers();
+            LoadDropDowns();
 
             if (id == null) return;
 
@@ -102,7 +108,7 @@ namespace kt_system.Pages.Users
                         VALUES
                         (@UserName, @Hash, @FullName, @Manager, @Role, @Email, @Status, @Remarks, @By)", con);
 
-                    cmd.Parameters.AddWithValue("@Hash", HashPassword(Password));
+                        cmd.Parameters.AddWithValue("@Hash", HashPassword(Password));
                 }
                 else               // edit user
                 {
@@ -112,7 +118,7 @@ namespace kt_system.Pages.Users
                         LastUpdatedBy = @By, LastUpdatedOn = GETDATE()
                         WHERE UserID = @id", con);
 
-                    cmd.Parameters.AddWithValue("@id", UserID);
+                        cmd.Parameters.AddWithValue("@id", UserID);
                 }
 
                 cmd.Parameters.AddWithValue("@UserName", UserName);
@@ -139,18 +145,22 @@ namespace kt_system.Pages.Users
             return RedirectToPage("UserIndex");
         }
 
+
+
+
+
+
         string HashPassword(string password)
         {
             PasswordHasher<string> hasher = new PasswordHasher<string>();
             return hasher.HashPassword("user", password);
         }
-
         void LoadManagers()
         {
             using (SqlConnection con = new SqlConnection(cs))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT UserName FROM AS_Users WHERE UserStatus = 'Active' ORDER BY UserName", con);
+                SqlCommand cmd = new SqlCommand("SELECT UserName FROM AS_Users WHERE UserRole IN ('Supervisor', 'Admin') ORDER BY UserName", con);
                 SqlDataReader r = cmd.ExecuteReader();
                 while (r.Read())
                 {
@@ -158,6 +168,12 @@ namespace kt_system.Pages.Users
                 }
             }
         }
+        void LoadDropDowns()
+        {
+            drpUserRoles = DaoHelper.GetCodes("UserRole");
+            drpUserStatus = DaoHelper.GetCodes("UserStatus");
+        }
+
     }
 }
 

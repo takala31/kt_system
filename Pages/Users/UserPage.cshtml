@@ -31,13 +31,26 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Role</label>
-                    <select asp-for="UserRole" asp-items="new SelectList(Model.Roles)" class="form-select bg-light fw-bold">
-                        <option value="">-- Select --</option>
+                    <select asp-for="UserRole" class="form-select">
+                        @foreach (string UsrRole in Model.drpUserRoles)
+                        {
+                            <option value="@UsrRole">@UsrRole</option>
+                        }
                     </select>
+
+                    @* <select asp-for="UserRole" asp-items="new SelectList(Model.Roles)" class="form-select bg-light fw-bold">
+                    <option value="">-- Select --</option>
+                    </select> *@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Status</label>
-                    <select asp-for="UserStatus" asp-items="new SelectList(Model.Statuses)" class="form-select bg-light fw-bold"></select>
+                    <select asp-for="UserStatus" class="form-select">
+                        @foreach (string UsrStatus in Model.drpUserStatus)
+                        {
+                            <option value="@UsrStatus">@UsrStatus</option>
+                        }
+                    </select>
+                    @* <select asp-for="UserStatus" asp-items="new SelectList(Model.Statuses)" class="form-select bg-light fw-bold"></select> *@
                 </div>
             </div>
         </div>
@@ -73,6 +86,6 @@
     <!-- Buttons -->
     <div class="mb-4">
         <button type="submit" class="btn btn-primary px-4">Save</button>
-        <a asp-page="Index" class="btn btn-secondary px-4">Cancel</a>
+        <a asp-page="/Users/UserIndex" class="btn btn-secondary px-4">User List</a>
     </div>
 </form>

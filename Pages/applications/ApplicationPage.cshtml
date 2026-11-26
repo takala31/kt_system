@@ -1,16 +1,9 @@
 ﻿@page "{id:int?}"
-@model kt_system.Pages.Applications.applicationModel
+@model kt_system.Pages.Applications.ApplicationPageModel
 @using System.Data
 
 <!-- Main container -->
 <div class="container mt-3">
-
-    <!-- Alert Message-->
-    @if (TempData["alertMessage"] != null)
-    {
-        <div id="alertMessage" class="alert alert-@(TempData["alertColor"])">@Html.Raw(TempData["alertMessage"])</div>
-        @* <div id="alertMessage" class="alert alert-success alert-dismissible">@TempData["alertMessage"]</div> *@
-    }
 
 
     <!-- Top banner: Mode(New/Edit) & Stage -->
@@ -20,13 +13,30 @@
             {
                 <span>Edit Application</span>
                 <span class="badge bg-danger">@Model.App.AppID</span>
-                <span class="badge bg-light text-secondary border">@Model.App.AppID_usr</span>
+                @* <span class="badge bg-light text-secondary border">@Model.App.AppID_usr</span> *@
             }
             else
             {
                 <span>New Application</span>
             }
         </h3>
+
+        <!--CreatedInfo-->
+        @* <div class="text-muted small"> *@
+           @* <div class="small"> *@
+            <div class="audit-info">
+
+            Created by: @Model.CreatedInfo            
+            @* Created: <b>@Model.App.CreatedBy</b> on @Model.App.CreatedOn?.ToString("dd-MMM-yyyy HH:mm") *@
+            @* Created:<input asp-for="@Model.CreatedInfo" class="form-control" readonly /> *@
+
+            &nbsp; | &nbsp;
+
+            Updated by: @Model.UpdatedInfo
+            @* Updated: <b>@Model.App.LastUpdatedBy</b> on @Model.App.LastUpdatedOn?.ToString("dd-MMM-yyyy HH:mm") *@
+            @* Updated:<input asp-for="@Model.UpdatedInfo" class="form-control" readonly /> *@
+            
+        </div>
         <span class="badge bg-primary fs-6">@Model.App.Stage</span>
     </div>
 
@@ -138,14 +148,27 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-               <!-- #Application LOG--> 
+                <!-- #Application LOG-->
+                @* <a asp-page="./Application" asp-route-id="@Model.App.AppID" asp-route-mode="Edit" asp-route-showlog="true" class="btn btn-secondary btn-sm">View Log</a> *@
+                @* <a asp-page="./Application" asp-route-id="@Model.App.AppID" asp-route-mode="Edit" asp-route-showlog="true" class="btn btn-secondary btn-log">View Log</a> *@
+
+                @* @if (showlog)
+                {
+                    <a ... asp-route-showlog="false">Hide Log</a>
+                }
+                else
+                {
+                    <a ... asp-route-showlog="true">View Log</a>
+                } *@
+
+
+
                 @if (Model.dtLog.Rows.Count > 0)
                 {
-                    <div class="card mt-4">
+                    <div class="card mt-4 mb-4">
                         <div class="card-header py-2">
                             <strong>History</strong>
                         </div>
@@ -180,7 +203,7 @@
                         </div>
                     </div>
                 }
-            <!-- #endregion -->
+                <!-- #endregion -->
 
 
             </div>
@@ -640,18 +663,27 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+
+
         <!-- ===================================================== -->
         <!-- Buttons -->
         <!-- ===================================================== -->
 
-        <div class="card">
+        <div class="card mt-4">
             <div class="card-body">
                 <button type="submit" class="btn btn-success">@(Model.Mode == "Edit" ? "Save Changes" : "Save New")</button>
                 @* <button type="submit" class="btn btn-primary">Save Changes</button> *@
-                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+                <a asp-page="/Applications/ApplicationIndex" class="btn btn-secondary">Applications List</a>
             </div>
         </div>
+
+        <!-- Alert Message-->
+        @if (TempData["alertMessage"] != null)
+        {
+            <div id="alertMessage" class="alert alert-@(TempData["alertColor"])">@Html.Raw(TempData["alertMessage"])</div>
+            @* <div id="alertMessage" class="alert alert-success alert-dismissible">@TempData["alertMessage"]</div> *@
+        }
 
 
 
@@ -689,7 +721,13 @@
 </div>
 
 
-
+<style>
+    .btn-log {
+        padding: 2px 8px;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+</style>
 
 
 

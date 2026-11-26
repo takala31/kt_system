@@ -8,22 +8,34 @@
 
   <ItemGroup>
     <Compile Remove="Pages\applications\New folder\**" />
+    <Compile Remove="Pages\NewFolder\**" />
     <Content Remove="Pages\applications\New folder\**" />
+    <Content Remove="Pages\NewFolder\**" />
     <EmbeddedResource Remove="Pages\applications\New folder\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
     <None Remove="Pages\applications\New folder\**" />
+    <None Remove="Pages\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Helpers\vbaFun_2.cs" />
     <Compile Remove="Pages\applications\Create - Copy.cshtml.cs" />
+    <Compile Remove="Pages\applications\Create.cshtml.cs" />
+    <Compile Remove="Pages\applications\Edit.cshtml.cs" />
     <Compile Remove="Pages\customers\Create - Copy.cshtml.cs" />
+    <Compile Remove="Pages\customers\Delete.cshtml.cs" />
+    <Compile Remove="Pages\customers\Edit.cshtml.cs" />
     <Compile Remove="Pages\test\tstApplications.cshtml.cs" />
     <Compile Remove="Pages\Users.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Pages\applications\Create - Copy.cshtml" />
+    <Content Remove="Pages\applications\Create.cshtml" />
+    <Content Remove="Pages\applications\Edit.cshtml" />
     <Content Remove="Pages\customers\Create - Copy.cshtml" />
+    <Content Remove="Pages\customers\Delete.cshtml" />
+    <Content Remove="Pages\customers\Edit.cshtml" />
     <Content Remove="Pages\Shared\_Layout - Copy.cshtml" />
     <Content Remove="Pages\test\tstApplications.cshtml" />
     <Content Remove="Pages\Users.cshtml" />
@@ -37,7 +49,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\GeneralCodes\" />
-    <Folder Include="Pages\NewFolder\" />
     <Folder Include="Pages\test\" />
     <Folder Include="Pages\properties\" />
   </ItemGroup>

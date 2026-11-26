@@ -1,5 +1,5 @@
 ﻿@page
-@model kt_system.Pages.Customers.CreateModel
+@model kt_system.Pages.Customers.CustomerPageModel
 
 @{
     ViewData["Title"] = "New Customer";
@@ -219,7 +219,7 @@
             <button type="submit" class="btn btn-success">@(Model.Mode == "New" ? "Save New" : "Save Changes")</button>
             ___________________________________**___________________________________**___________________________________**___________________________________
 
-            <a asp-page="./Index" class="btn btn-secondary">Customers List</a>
+            <a asp-page="/Customers/CustomerIndex" class="btn btn-secondary">Customers List</a>
         </div>
     </form>
 }

@@ -53,12 +53,20 @@
 
             <p class="text-muted mb-0" style="font-size: .9rem; -webkit-text-fill-color: goldenrod;">Customer, Property & Finance Management Platform</p>
             <div class="mb-0">
-                <a class="btn btn btn-outline-secondary btn-sm me-2" asp-page="/Applications/Application">New Application</a>
-                <a class="btn btn-outline-secondary btn-sm me-2" asp-page="/Customers/Index">Customers</a>
+                <a class="btn btn btn-outline-secondary btn-sm me-2" asp-page="/Applications/ApplicationIndex">New Application</a>
+                <a class="btn btn-outline-secondary btn-sm me-2" asp-page="/Customers/CustomerIndex">Customers</a>
                 <a class="btn btn-outline-secondary btn-sm me-2" asp-page="/Properties/Index">Properties</a>
             </div>
             <div class="mb-0" style="display: flex; justify-content: space-between;">
-                <span class="text-white" style="font-size: .6rem;">Welcome, @LoggedName - @LoggedRole | Version 1.0.0 </span>
+                @if (!string.IsNullOrEmpty(LoggedName)) 
+                {
+                    <span class="text-white" style="font-size:.6rem;">Welcome, @LoggedName (@LoggedRole)</span>
+                }
+                else
+                {
+                    <span class="text-white" style="font-size:.6rem;">?</span>
+
+                }
 
                 <span>
                     @if (string.IsNullOrEmpty(@LoggedName))
@@ -114,12 +122,12 @@
                                 <form method="post">
                                     <div class="mb-3">
                                         <label>User Name</label>
-                                        <input type="text" class="form-control" name="UserName" required>
+                                        <input type="text" class="form-control" name="UserName" value="khalid" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label>Password</label>
-                                        <input type="password" class="form-control" name="Password" required >
+                                        <input type="password" class="form-control" name="Password" value="1" required >
                                     </div>
 
                                     <button type="submit" class="btn btn-primary w-100">Login</button>

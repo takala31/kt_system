@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace kt_system.Pages.Applications
 {
-    public class IndexModel : PageModel
+    public class ApplicationIndexModel : PageModel
     {
         public int AllCount { get; set; }
         public int LeadCount { get; set; }
@@ -12,25 +12,51 @@ namespace kt_system.Pages.Applications
         public int ApprovedCount { get; set; }
         public int RejectedCount { get; set; }
         public int DDEQCCount { get; set; }
+        public int EndCount { get; set; }
         public List<Dictionary<string, object>> Apps { get; set; } = new();
 
         public string? SearchText { get; set; }
         public string? Stage { get; set; }
 
+
         private void LoadPageData()
         {
-            AllCount = DaoHelper.DCount("AS_Entries", "1=1");
-            LeadCount = DaoHelper.DCount("AS_Entries", "Stage='Lead'");
-            OnProgressCount = DaoHelper.DCount("AS_Entries", "Stage='OnProgress'");
-            ApprovedCount = DaoHelper.DCount("AS_Entries", "Stage='Approved'");
-            RejectedCount = DaoHelper.DCount("AS_Entries", "Stage='Rejected'");
-            DDEQCCount = DaoHelper.DCount("AS_Entries", "Stage='DDEQC'");
-        }
+            string _UserRole = HttpContext.Session.GetString("UserRole");
+            string _UserName = HttpContext.Session.GetString("UserName");
+            if (_UserRole == "User")
+            {
+                AllCount = DaoHelper.DCount("AS_Entries", $"CreatedBy='{_UserName}'");
+                LeadCount = DaoHelper.DCount("AS_Entries", $"Stage='Lead' AND CreatedBy='{_UserName}'");
+                OnProgressCount = DaoHelper.DCount("AS_Entries", $"Stage='OnProgress' AND CreatedBy='{_UserName}'");
+                ApprovedCount = DaoHelper.DCount("AS_Entries", $"Stage='Approved' AND CreatedBy='{_UserName}'");
+                RejectedCount = DaoHelper.DCount("AS_Entries", $"Stage='Rejected' AND CreatedBy='{_UserName}'");
+                DDEQCCount = DaoHelper.DCount("AS_Entries", $"Stage='DDEQC' AND CreatedBy='{_UserName}'");
+                EndCount = DaoHelper.DCount("AS_Entries", $"Stage='End' AND CreatedBy='{_UserName}'");
+
+            }
+            else if (_UserRole == "Admin" || _UserRole == "Supervisor")
+            {
+                AllCount = DaoHelper.DCount("AS_Entries", "1=1");
+                LeadCount = DaoHelper.DCount("AS_Entries", "Stage='Lead'");
+                OnProgressCount = DaoHelper.DCount("AS_Entries", "Stage='OnProgress'");
+                ApprovedCount = DaoHelper.DCount("AS_Entries", "Stage='Approved'");
+                RejectedCount = DaoHelper.DCount("AS_Entries", "Stage='Rejected'");
+                DDEQCCount = DaoHelper.DCount("AS_Entries", "Stage='DDEQC'");
+                EndCount = DaoHelper.DCount("AS_Entries", "Stage='End'");
+                }
+            }
 
         //OnGet start
         public void OnGet(string? stagePassed, string? searchText)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                HttpContext.Session.SetString("RequestingPage", "/Applications/ApplicationIndex");
+                Response.Redirect("/Index?login=1"); return;
+            }
+
+
             LoadPageData();
 
             //Search parameters
@@ -38,9 +64,16 @@ namespace kt_system.Pages.Applications
             SearchText = searchText;
             string sql = "SELECT * FROM AS_Entries WHERE 1=1";
 
+            string _UserRole = HttpContext.Session.GetString("UserRole");
+            string _UserName = HttpContext.Session.GetString("UserName");
+
+            if (_UserRole == "User") sql += $" AND CreatedBy = '{_UserName}'";
+
             if (string.IsNullOrEmpty(stagePassed) && string.IsNullOrEmpty(searchText))
             {
+                sql += " ORDER BY AppID DESC";
                 Apps = new();
+                Apps = DaoHelper.DList(sql);
                 return;
             }
 
@@ -61,6 +94,8 @@ namespace kt_system.Pages.Applications
                             OR AppID_usr LIKE '%{searchText}%'
                             OR Employer LIKE '%{searchText}%'
                             OR Nationality LIKE '%{searchText}%'
+                            OR Nationality LIKE '%{searchText}%'
+                            OR CreatedBy LIKE '%{searchText}%'
                             OR Stage LIKE '%{searchText}%'
             )";
             }

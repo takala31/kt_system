@@ -1,6 +1,7 @@
 using kt_system.Helpers;
 using kt_system.Models;
 using KT_System.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +12,7 @@ using System.Security.Cryptography;
 
 namespace kt_system.Pages.Applications
 {
-    public class applicationModel : PageModel
+    public class ApplicationPageModel : PageModel
     {
 
         //Application information
@@ -19,6 +20,12 @@ namespace kt_system.Pages.Applications
         [BindProperty] public Customer Cust { get; set; } = new();
         [BindProperty] public Employment Empl { get; set; } = new();
         [BindProperty] public Property Prop { get; set; } = new();
+
+
+        public string CreatedInfo => $"{App.CreatedBy} on {App.CreatedOn:dd-MMM-yyyy HH:mm}";
+        public string UpdatedInfo => $"{App.LastUpdatedBy} on {App.LastUpdatedOn:dd-MMM-yyyy HH:mm}";
+
+
 
         public List<Dictionary<string, object>> drpProducts { get; set; } = new();
         public List<Dictionary<string, object>> drpNationalities { get; set; } = new();
@@ -32,15 +39,14 @@ namespace kt_system.Pages.Applications
         public List<Dictionary<string, object>> drpRegistrationType { get; set; } = new();
         public List<SelectListItem> CustomerList { get; set; } = new();
         [BindProperty] public string Mode { get; set; } = "";
+        //public int ShowLog { get; set; }
 
         public DataTable dtLog { get; set; } = new();
 
+
         //====================================================================================================================================
-        //                                                  GET handler for form opening
+        //                                                  OnGET handler for form opening
         //====================================================================================================================================
-        //public void OnGet(bool loadsample = false, int? appid = null)
-        //public void OnGet(int id)
-        //{
         private void LoadDummyData_text()
         {
             // Application
@@ -134,11 +140,22 @@ namespace kt_system.Pages.Applications
             drpRegistrationType = DaoHelper.DList(@"SELECT Description As RegistrationType FROM GeneralCodes where CodeCategory='RegistrationType'");
         }
 
-        public void OnGet(int? id, string mode)
+        public void OnGet(int? id, string mode, bool showlog= false)
         {
 
-            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Account/Login"); return;}
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) {Response.Redirect("/Index?login=1"); return;}
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) 
+            {
+                //HttpContext.Session.SetString("RequestingPage", "/Applications/Application?id=11&mode=Edit");
+                HttpContext.Session.SetString("RequestingPage", "/Applications/ApplicationIndex");
+                Response.Redirect("/Index?login=1"); return;
+            }
+
+
+            //if (showlog && id>0)
+            //{
+            //    //dtLog = DaoHelper.GetDataTable(...);
+            //    if (id.HasValue) dtLog = DaoHelper.GetDataTable($"SELECT * FROM AppLog WHERE AppID = {id} ORDER BY ChangedDate DESC");
+            //}
 
             if (id.HasValue) dtLog = DaoHelper.GetDataTable($"SELECT * FROM AppLog WHERE AppID = {id} ORDER BY ChangedDate DESC");
 
@@ -160,6 +177,11 @@ namespace kt_system.Pages.Applications
             App.AppID_usr = row["AppID_usr"]?.ToString();
             App.AppProduct = row["AppProduct"]?.ToString();
             App.Stage = row["Stage"]?.ToString();
+            App.CreatedBy = row["CreatedBy"].ToString();
+            App.CreatedOn = Convert.ToDateTime(row["CreatedOn"]);
+
+            App.LastUpdatedBy = row["LastUpdatedBy"]?.ToString();
+            App.LastUpdatedOn = Convert.ToDateTime(row["LastUpdatedOn"]);
 
             Cust.FirstName = row["FirstName"]?.ToString();
             Cust.MiddleName = row["MiddleName"]?.ToString();
@@ -224,16 +246,17 @@ namespace kt_system.Pages.Applications
             App.Remarks = row["Remarks"]?.ToString();
         }
 
-        //====================================================================================================================================
-        //                                                  POST handler for form submission
-        //====================================================================================================================================
 
-
+        //====================================================================================================================================
+        //                                                  OnPOST handler for form submission
+        //====================================================================================================================================
         public IActionResult OnPost()
         {
+            string _LoggedName= HttpContext.Session.GetString("UserName");
 
             #region Valiation Block
             var errors = ValidateApplication();
+            App.NFA = (App.OriginalPrice ?? 0) - (App.Downpayment ?? 0);
             if (errors.Count > 0)
             {
                 TempData["alertColor"] = "danger";
@@ -243,96 +266,7 @@ namespace kt_system.Pages.Applications
             }
             #endregion
 
-            App.NFA = (App.OriginalPrice ?? 0) - (App.Downpayment ?? 0);
-                #region EDIT
-                string sqlEdit;
-                if (Mode == "Edit")
-                {sqlEdit = $@"
-                    UPDATE AS_Entries
-                    SET
-                        AppID_usr='{App.AppID_usr}',
-                        AppProduct='{App.AppProduct}',
-                        Stage='{App.Stage}',
-
-                        FirstName='{Cust.FirstName}',
-                        MiddleName='{Cust.MiddleName}',
-                        LastName='{Cust.LastName}',
-                        AraName='{Cust.AraName}',
-                        Nationality='{Cust.Nationality}',
-                        CustomerType='{Cust.CustomerType}',    
-                        DOB='{Cust.DOB}',    
-
-                        EmployerCatg='{Empl.EmployerCatg}',
-                        Employer='{Empl.Employer}',
-                        EmployerActivity='{Empl.EmployerActivity}',
-                        Salary={(Empl.Salary.HasValue ? Empl.Salary.Value.ToString() : "NULL")},
-                        DOJ={(Empl.DOJ.HasValue ? $"'{Empl.DOJ:yyyy-MM-dd}'" : "NULL")},
-                        LOS={(Empl.LOS.HasValue ? Empl.LOS.Value.ToString() : "NULL")},
-                        BankingWith='{Empl.BankingWith}',
-                        AccountNumber='{Empl.AccountNumber}',
-
-                        PropertyType='{Prop.PropertyType}',
-                        PropertyDesc='{Prop.PropertyDesc}',
-                        MortgageDegree='{Prop.MortgageDegree}',
-                        MasterDevelopmentName='{Prop.MasterDevelopmentName}',
-                        MasterDeveloperName='{Prop.MasterDeveloperName}',
-                        ProjectName='{Prop.ProjectName}',
-                        DeveloperName='{Prop.DeveloperName}',
-                        BuildingName='{Prop.BuildingName}',
-
-                        OriginalPropertyValue={(Prop.OriginalPropertyValue.HasValue ? Prop.OriginalPropertyValue.Value.ToString() : "NULL")},
-                        AppraisalValue={(Prop.AppraisalValue.HasValue ? Prop.AppraisalValue.Value.ToString() : "NULL")},
-                        AppraisalBy='{Prop.AppraisalBy}',
-                        AppraisalDate={(Prop.AppraisalDate.HasValue ? $"'{Prop.AppraisalDate:yyyy-MM-dd}'" : "NULL")},
-                        PropertyStatus='{Prop.PropertyStatus}',
-                        DateOfCompletion={(Prop.DateOfCompletion.HasValue ? $"'{Prop.DateOfCompletion:yyyy-MM-dd}'" : "NULL")},
-
-                        LotNo='{Prop.LotNo}',
-                        PlotNo='{Prop.PlotNo}',
-                        TitleDeedNo='{Prop.TitleDeedNo}',
-                        LandArea={(Prop.LandArea.HasValue ? Prop.LandArea.Value.ToString() : "NULL")},
-                        BuiltupArea={(Prop.BuiltupArea.HasValue ? Prop.BuiltupArea.Value.ToString() : "NULL")},
-                        PropertyValuePerUnit={(Prop.PropertyValuePerUnit.HasValue ? Prop.PropertyValuePerUnit.Value.ToString() : "NULL")},
-
-                        RegistrationType='{Prop.RegistrationType}',
-                        RegistrationNumber='{Prop.RegistrationNumber}',
-                        RegisteredOnNameOf='{Prop.RegisteredOnNameOf}',
-                        Relation='{Prop.Relation}',
-                        RegistrationDate={(Prop.RegistrationDate.HasValue ? $"'{Prop.RegistrationDate:yyyy-MM-dd}'" : "NULL")},
-                        IssuedFrom='{Prop.IssuedFrom}',
-                        VillaAptNo='{Prop.VillaAptNo}',
-                        BuildingCompoundName='{Prop.BuildingCompoundName}',
-                        StreetName='{Prop.StreetName}',
-                        Country='{Prop.Country}',
-                        Emirate='{Prop.Emirate}',
-                        AreaName='{Prop.AreaName}',
-
-                        OriginalPrice={(App.OriginalPrice.HasValue ? App.OriginalPrice.Value.ToString() : "NULL")},
-                        Downpayment={(App.Downpayment.HasValue ? App.Downpayment.Value.ToString() : "NULL")},
-                        NFA={(App.NFA.HasValue ? App.NFA.Value.ToString() : "NULL")},
-
-                        ProfitRate={(App.ProfitRate.HasValue ? App.ProfitRate.Value.ToString() : "NULL")},
-                        Tenor={(App.Tenor.HasValue ? App.Tenor.Value.ToString() : "NULL")},
-                        DSR={(App.DSR.HasValue ? App.DSR.Value.ToString() : "NULL")},
-
-                        SalesName='{App.SalesName}',
-                        Remarks='{App.Remarks}',
-
-                        LastUpdatedBy ='{App.LastUpdatedBy}',
-                        LastUpdatedOn=GETDATE() 
-                        WHERE AppID={App.AppID}";
-
-                DaoHelper.DExecute(sqlEdit);
-                AppLogHelper(App.AppID, "UPDATE");
-
-                TempData["alertColor"] = "success";
-                TempData["alertMessage"] = "Changes saved successfully.";
-                return RedirectToPage(new { id = App.AppID, mode = "Edit" });
-                //return RedirectToPage(new { id = App.AppID });
-            }
-            #endregion
-
-            #region INSERT
+            #region INSERT script (Mode == "New")
             else if (Mode == "New")
             {
                 if (Empl.DOJ.HasValue) Empl.LOS = Math.Round(((decimal)(DateTime.Today - Empl.DOJ.Value).TotalDays) / 365.25m, 2);
@@ -356,8 +290,6 @@ namespace kt_system.Pages.Applications
                     CustomerType,
                     DOB,
 
-                    CreatedBy,
-                    LastUpdatedBy,
 
                     Employer,
                     EmployerCatg,
@@ -409,7 +341,11 @@ namespace kt_system.Pages.Applications
                     Tenor,
                     DSR,
                     SalesName,
-                    Remarks
+                    Remarks,
+
+                    CreatedBy,
+                    LastUpdatedBy
+
                 )
                 VALUES
                 (
@@ -428,8 +364,6 @@ namespace kt_system.Pages.Applications
                     '{Cust.CustomerType}',
                     {(Cust.DOB.HasValue ? $"'{Cust.DOB.Value:yyyy-MM-dd}'" : "NULL")},
 
-                    'Admin',
-                    'Admin',
                     '{Empl.Employer}',
                     '{Empl.EmployerCatg}',
                     '{Empl.EmployerActivity}',
@@ -437,49 +371,52 @@ namespace kt_system.Pages.Applications
                     {(Empl.DOJ.HasValue ? $"'{Empl.DOJ.Value:yyyy-MM-dd}'" : "NULL")},
                     {(Empl.LOS.HasValue ? Empl.LOS.Value.ToString() : "NULL")},
                     '{Empl.BankingWith}',
-                    '{Empl.AccountNumber}'
+                    '{Empl.AccountNumber}',
 
-                    ,'{Prop.PropertyType}'
-                    ,'{Prop.PropertyDesc}'
-                    ,'{Prop.MortgageDegree}'
-                    ,'{Prop.MasterDevelopmentName}'
-                    ,'{Prop.MasterDeveloperName}'
-                    ,'{Prop.ProjectName}'
-                    ,'{Prop.DeveloperName}'
-                    ,'{Prop.BuildingName}'
-                    ,{(Prop.OriginalPropertyValue.HasValue ? Prop.OriginalPropertyValue.Value.ToString() : "NULL")}
-                    ,{(Prop.AppraisalValue.HasValue ? Prop.AppraisalValue.Value.ToString() : "NULL")}
-                    ,'{Prop.AppraisalBy}'
-                    ,{(Prop.AppraisalDate.HasValue ? $"'{Prop.AppraisalDate.Value:yyyy-MM-dd}'" : "NULL")}
-                    ,'{Prop.PropertyStatus}'
-                    ,{(Prop.DateOfCompletion.HasValue ? $"'{Prop.DateOfCompletion.Value:yyyy-MM-dd}'" : "NULL")}
-                    ,'{Prop.LotNo}'
-                    ,'{Prop.PlotNo}'
-                    ,'{Prop.TitleDeedNo}'
-                    ,{(Prop.LandArea.HasValue ? Prop.LandArea.Value.ToString() : "NULL")}
-                    ,{(Prop.BuiltupArea.HasValue ? Prop.BuiltupArea.Value.ToString() : "NULL")}
-                    ,{(Prop.PropertyValuePerUnit.HasValue ? Prop.PropertyValuePerUnit.Value.ToString() : "NULL")}
-                    ,'{Prop.RegistrationType}'
-                    ,'{Prop.RegistrationNumber}'
-                    ,'{Prop.RegisteredOnNameOf}'
-                    ,'{Prop.Relation}'
-                    ,{(Prop.RegistrationDate.HasValue ? $"'{Prop.RegistrationDate.Value:yyyy-MM-dd}'" : "NULL")}
-                    ,'{Prop.IssuedFrom}'
-                    ,'{Prop.VillaAptNo}'
-                    ,'{Prop.BuildingCompoundName}'
-                    ,'{Prop.StreetName}'
-                    ,'{Prop.Country}'
-                    ,'{Prop.Emirate}'
-                    ,'{Prop.AreaName}'
+                    '{Prop.PropertyType}',
+                    '{Prop.PropertyDesc}',
+                    '{Prop.MortgageDegree}',
+                    '{Prop.MasterDevelopmentName}',
+                    '{Prop.MasterDeveloperName}',
+                    '{Prop.ProjectName}',
+                    '{Prop.DeveloperName}',
+                    '{Prop.BuildingName}',
+                    {(Prop.OriginalPropertyValue.HasValue ? Prop.OriginalPropertyValue.Value.ToString() : "NULL")},
+                    {(Prop.AppraisalValue.HasValue ? Prop.AppraisalValue.Value.ToString() : "NULL")},
+                    '{Prop.AppraisalBy}',
+                    {(Prop.AppraisalDate.HasValue ? $"'{Prop.AppraisalDate.Value:yyyy-MM-dd}'" : "NULL")},
+                    '{Prop.PropertyStatus}',
+                    {(Prop.DateOfCompletion.HasValue ? $"'{Prop.DateOfCompletion.Value:yyyy-MM-dd}'" : "NULL")},
+                    '{Prop.LotNo}',
+                    '{Prop.PlotNo}',
+                    '{Prop.TitleDeedNo}',
+                    {(Prop.LandArea.HasValue ? Prop.LandArea.Value.ToString() : "NULL")},
+                    {(Prop.BuiltupArea.HasValue ? Prop.BuiltupArea.Value.ToString() : "NULL")},
+                    {(Prop.PropertyValuePerUnit.HasValue ? Prop.PropertyValuePerUnit.Value.ToString() : "NULL")},
+                    '{Prop.RegistrationType}',
+                    '{Prop.RegistrationNumber}',
+                    '{Prop.RegisteredOnNameOf}',
+                    '{Prop.Relation}',
+                    {(Prop.RegistrationDate.HasValue ? $"'{Prop.RegistrationDate.Value:yyyy-MM-dd}'" : "NULL")},
+                    '{Prop.IssuedFrom}',
+                    '{Prop.VillaAptNo}',
+                    '{Prop.BuildingCompoundName}',
+                    '{Prop.StreetName}',
+                    '{Prop.Country}',
+                    '{Prop.Emirate}',
+                    '{Prop.AreaName}',
 
-                    ,{(App.OriginalPrice.HasValue ? App.OriginalPrice.Value.ToString() : "NULL")}
-                    ,{(App.Downpayment.HasValue ? App.Downpayment.Value.ToString() : "NULL")}
-                    ,{(App.NFA.HasValue ? App.NFA.Value.ToString() : "NULL")}
-                    ,{(App.ProfitRate.HasValue ? App.ProfitRate.Value.ToString() : "NULL")}
-                    ,{(App.Tenor.HasValue ? App.Tenor.Value.ToString() : "NULL")}
-                    ,{(App.DSR.HasValue ? App.DSR.Value.ToString() : "NULL")}
-                    ,'{App.SalesName}'
-                    ,'{App.Remarks}'
+                    {(App.OriginalPrice.HasValue ? App.OriginalPrice.Value.ToString() : "NULL")},
+                    {(App.Downpayment.HasValue ? App.Downpayment.Value.ToString() : "NULL")},
+                    {(App.NFA.HasValue ? App.NFA.Value.ToString() : "NULL")},
+                    {(App.ProfitRate.HasValue ? App.ProfitRate.Value.ToString() : "NULL")},
+                    {(App.Tenor.HasValue ? App.Tenor.Value.ToString() : "NULL")},
+                    {(App.DSR.HasValue ? App.DSR.Value.ToString() : "NULL")},
+                    '{App.SalesName}',
+                    '{App.Remarks}',
+
+                    '{_LoggedName}',
+                    '{_LoggedName}'
 
                 )";
 
@@ -490,12 +427,109 @@ namespace kt_system.Pages.Applications
                     TempData["alertColor"] = "success";
                     TempData["alertMessage"] = "New application added successfully.";
                     return RedirectToPage(new{id = App.AppID,mode = "Edit"});
-                #endregion
             }
-            //else
-            throw new Exception("Invalid Mode: " + Mode);
+                #endregion
+
+            #region EDIT script (Mode == "Edit")
+            string sqlEdit;
+            if (Mode == "Edit")
+            {sqlEdit = $@"
+                UPDATE AS_Entries
+                SET
+                    AppID_usr='{App.AppID_usr}',
+                    AppProduct='{App.AppProduct}',
+                    Stage='{App.Stage}',
+
+                    FirstName='{Cust.FirstName}',
+                    MiddleName='{Cust.MiddleName}',
+                    LastName='{Cust.LastName}',
+                    AraName='{Cust.AraName}',
+                    Nationality='{Cust.Nationality}',
+                    CustomerType='{Cust.CustomerType}',    
+                    DOB='{Cust.DOB}',    
+
+                    EmployerCatg='{Empl.EmployerCatg}',
+                    Employer='{Empl.Employer}',
+                    EmployerActivity='{Empl.EmployerActivity}',
+                    Salary={(Empl.Salary.HasValue ? Empl.Salary.Value.ToString() : "NULL")},
+                    DOJ={(Empl.DOJ.HasValue ? $"'{Empl.DOJ:yyyy-MM-dd}'" : "NULL")},
+                    LOS={(Empl.LOS.HasValue ? Empl.LOS.Value.ToString() : "NULL")},
+                    BankingWith='{Empl.BankingWith}',
+                    AccountNumber='{Empl.AccountNumber}',
+
+                    PropertyType='{Prop.PropertyType}',
+                    PropertyDesc='{Prop.PropertyDesc}',
+                    MortgageDegree='{Prop.MortgageDegree}',
+                    MasterDevelopmentName='{Prop.MasterDevelopmentName}',
+                    MasterDeveloperName='{Prop.MasterDeveloperName}',
+                    ProjectName='{Prop.ProjectName}',
+                    DeveloperName='{Prop.DeveloperName}',
+                    BuildingName='{Prop.BuildingName}',
+
+                    OriginalPropertyValue={(Prop.OriginalPropertyValue.HasValue ? Prop.OriginalPropertyValue.Value.ToString() : "NULL")},
+                    AppraisalValue={(Prop.AppraisalValue.HasValue ? Prop.AppraisalValue.Value.ToString() : "NULL")},
+                    AppraisalBy='{Prop.AppraisalBy}',
+                    AppraisalDate={(Prop.AppraisalDate.HasValue ? $"'{Prop.AppraisalDate:yyyy-MM-dd}'" : "NULL")},
+                    PropertyStatus='{Prop.PropertyStatus}',
+                    DateOfCompletion={(Prop.DateOfCompletion.HasValue ? $"'{Prop.DateOfCompletion:yyyy-MM-dd}'" : "NULL")},
+
+                    LotNo='{Prop.LotNo}',
+                    PlotNo='{Prop.PlotNo}',
+                    TitleDeedNo='{Prop.TitleDeedNo}',
+                    LandArea={(Prop.LandArea.HasValue ? Prop.LandArea.Value.ToString() : "NULL")},
+                    BuiltupArea={(Prop.BuiltupArea.HasValue ? Prop.BuiltupArea.Value.ToString() : "NULL")},
+                    PropertyValuePerUnit={(Prop.PropertyValuePerUnit.HasValue ? Prop.PropertyValuePerUnit.Value.ToString() : "NULL")},
+
+                    RegistrationType='{Prop.RegistrationType}',
+                    RegistrationNumber='{Prop.RegistrationNumber}',
+                    RegisteredOnNameOf='{Prop.RegisteredOnNameOf}',
+                    Relation='{Prop.Relation}',
+                    RegistrationDate={(Prop.RegistrationDate.HasValue ? $"'{Prop.RegistrationDate:yyyy-MM-dd}'" : "NULL")},
+                    IssuedFrom='{Prop.IssuedFrom}',
+                    VillaAptNo='{Prop.VillaAptNo}',
+                    BuildingCompoundName='{Prop.BuildingCompoundName}',
+                    StreetName='{Prop.StreetName}',
+                    Country='{Prop.Country}',
+                    Emirate='{Prop.Emirate}',
+                    AreaName='{Prop.AreaName}',
+
+                    OriginalPrice={(App.OriginalPrice.HasValue ? App.OriginalPrice.Value.ToString() : "NULL")},
+                    Downpayment={(App.Downpayment.HasValue ? App.Downpayment.Value.ToString() : "NULL")},
+                    NFA={(App.NFA.HasValue ? App.NFA.Value.ToString() : "NULL")},
+
+                    ProfitRate={(App.ProfitRate.HasValue ? App.ProfitRate.Value.ToString() : "NULL")},
+                    Tenor={(App.Tenor.HasValue ? App.Tenor.Value.ToString() : "NULL")},
+                    DSR={(App.DSR.HasValue ? App.DSR.Value.ToString() : "NULL")},
+
+                    SalesName='{App.SalesName}',
+                    Remarks='{App.Remarks}',
+
+                    LastUpdatedBy ='{_LoggedName}',
+                    LastUpdatedOn=GETDATE() 
+
+                    WHERE AppID={App.AppID}";
+
+            DaoHelper.DExecute(sqlEdit);
+            AppLogHelper(App.AppID, "UPDATE");
+
+            TempData["alertColor"] = "success";
+            TempData["alertMessage"] = "Changes saved successfully.";
+            return RedirectToPage(new { id = App.AppID, mode = "Edit" });
+            //return RedirectToPage(new { id = App.AppID });
+        }
+            #endregion
+
+            #region Wrong Mode
+                //else
+                throw new Exception("Invalid Mode: " + Mode);
+            #endregion
         }
 
+
+
+        //====================================================================================================================================
+        //                                                  Application LOG
+        //====================================================================================================================================
         private void AppLogHelper (BigInteger AppId, string LogAction)
             {
                 string LogChangedBy =HttpContext.Session.GetString("UserName") ?? "";                   

@@ -12,6 +12,7 @@ namespace kt_system.Pages.Users
         public int TerminatedCount { get; set; }
         public int OnHoldCount { get; set; }
         public int InActiveCount { get; set; }
+        public int SuspendedCount { get; set; }
         public List<Dictionary<string, object>> users { get; set; } = new();
 
         public string? SearchText { get; set; }
@@ -25,12 +26,19 @@ namespace kt_system.Pages.Users
             TerminatedCount = DaoHelper.DCount("AS_Users", "UserStatus='Terminated'");
             OnHoldCount = DaoHelper.DCount("AS_Users", "UserStatus='OnHold'");
             InActiveCount = DaoHelper.DCount("AS_Users", "UserStatus='InActive'");
+            SuspendedCount = DaoHelper.DCount("AS_Users", "UserStatus='Suspended'");
         }
 
         //OnGet start
         public void OnGet(string? statusPassed, string? searchText)
         {
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+            //if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName"))) { Response.Redirect("/Index?login=1"); return; }
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserName")))
+            {
+                HttpContext.Session.SetString("RequestingPage", "/users/userindex");
+                Response.Redirect("/Index?login=1"); return;
+            }
+
             LoadPageData();
 
             //Search parameters
