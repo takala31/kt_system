@@ -6,20 +6,20 @@
     <a asp-page="/Applications/ApplicationPage" class="btn btn-primary" asp-route-loadsample="true" asp-route-mode="New">New Application</a>
 </div>
 
-@if (string.IsNullOrEmpty(Model.Stage) || Model.Stage == "All")
+@* @if (string.IsNullOrEmpty(Model.Stage) || Model.Stage == "All")
 {
     <h6>All Applications</h6>
 }
 else
 {
     <h6>@Model.Stage Applications</h6>
-}
+} *@
 
 <!-- stages breakdown dashboard-->
 <div class="row row-cols-7 g-3">
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="All" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>AllCount</h6>
                     <h2>@Model.AllCount</h2>
@@ -30,7 +30,7 @@ else
 
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="Lead" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Leads</h6>
                     <h2>@Model.LeadCount</h2>
@@ -41,7 +41,7 @@ else
 
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="OnProgress" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>On Progress</h6>
                     <h2>@Model.OnProgressCount</h2>
@@ -52,7 +52,7 @@ else
 
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="Approved" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Approved</h6>
                     <h2>@Model.ApprovedCount</h2>
@@ -63,7 +63,7 @@ else
 
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="Rejected" class="text-decoration-none">
-            <div class="card text-bg-primary">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Rejected</h6>
                     <h2>@Model.RejectedCount</h2>
@@ -73,7 +73,7 @@ else
     </div>
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="DDEQC" class="text-decoration-none">
-            <div class="card text-bg-primary">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>DDEQC</h6>
                     <h2>@Model.DDEQCCount</h2>
@@ -83,7 +83,7 @@ else
     </div>
     <div class="col">
         <a asp-page="/Applications/ApplicationIndex" asp-route-stagePassed="End" class="text-decoration-none">
-            <div class="card text-bg-primary">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>End</h6>
                     <h2>@Model.EndCount</h2>
@@ -96,24 +96,19 @@ else
 <!-- Search form -->
 <form method="get">
     <div class="row mb-2 mt-1">
-        <div class="col-md-12">
-            <div class="input-group input-group-sm">
-
-                <input type="text"
-                       name="searchText"
-                       value="@Model.SearchText"
-                       class="form-control"
-                       placeholder="Search application no, customer, employer..." />
-
-                <input type="hidden"
-                       name="stagePassed"
-                       value="@Model.Stage" />
-
-                <button type="submit" class="btn btn-secondary">
-                    Search
-                </button>
-
+        <div class="col-md-3">
+            <div class="input-group input-group-sm">    
+                <input type="text" name="searchText" value="@Model.SearchText" class="form-control" placeholder="Search application no, customer, employer, user..." />
+                <input type="hidden" name="stagePassed" value="@Model.Stage" />
+                &nbsp 
+                <button type="submit" class="btn btn-secondary">Search</button>
+                &nbsp
+                <a asp-page="/Applications/ApplicationIndex" class="btn btn-outline-secondary">x</a>
             </div>
+        </div>
+
+        <div class="col-md-9 text-end alert-secondary">
+            <span>Found: @Model.Apps.Count applications</span>
         </div>
     </div>
 </form>
@@ -136,6 +131,7 @@ else
                     <th>User</th>
                     <th>Stage</th>
                     <th>Actions</th>
+                    <th>Print</th>
                 </tr>
             </thead>
 
@@ -168,8 +164,12 @@ else
 
                         <td>
                             <a asp-page="ApplicationPage" asp-route-id="@row["AppID"]" asp-route-mode="Edit">Edit</a>
-
                         </td>
+
+                        <td>
+                            <a asp-page="ApplicationPrint" asp-route-id="@row["AppID"]" asp-route-mode="Edit">Print</a>
+                        </td>
+
                     </tr>
                 }
             </tbody>

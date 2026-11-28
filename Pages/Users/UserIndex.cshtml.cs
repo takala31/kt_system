@@ -1,6 +1,7 @@
 using kt_system.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
 
 namespace kt_system.Pages.Users
 {
@@ -14,9 +15,12 @@ namespace kt_system.Pages.Users
         public int InActiveCount { get; set; }
         public int SuspendedCount { get; set; }
         public List<Dictionary<string, object>> users { get; set; } = new();
-
         public string? SearchText { get; set; }
         public string? Status { get; set; }
+
+        public DataTable dtPerformance = new();
+
+
 
         private void LoadPageData()
         {
@@ -29,6 +33,41 @@ namespace kt_system.Pages.Users
             SuspendedCount = DaoHelper.DCount("AS_Users", "UserStatus='Suspended'");
         }
 
+        private void LoadPerformance()
+        {
+            string sql = @"
+                    SELECT
+                        CreatedBy AS [User],
+                        COUNT(*) AS TotalCases,
+
+                        SUM(CASE WHEN Stage='Lead' THEN 1 ELSE 0 END) AS Lead,
+                        SUM(CASE WHEN Stage='DDEQC' THEN 1 ELSE 0 END) AS DDEQC,
+                        SUM(CASE WHEN Stage='OnProgress' THEN 1 ELSE 0 END) AS OnProgress,
+                        SUM(CASE WHEN Stage='Approved' THEN 1 ELSE 0 END) AS Approved,
+                        SUM(CASE WHEN Stage='Rejected' THEN 1 ELSE 0 END) AS Rejected,
+                        SUM(CASE WHEN Stage='End' THEN 1 ELSE 0 END) AS [End],
+
+                        SUM(
+                            CASE
+                                WHEN Stage NOT IN('Approved', 'Rejected', 'End')
+                                THEN 1
+                                ELSE 0
+                            END
+                        ) AS OpenCases,
+
+                        CAST( 100.0 * SUM(CASE WHEN Stage = 'Approved' THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS DECIMAL(5, 2)
+                        ) AS ApprovalPct,
+
+                        CAST(100.0 * SUM(CASE WHEN Stage = 'Rejected' THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0) AS DECIMAL(5, 2)
+                        ) AS RejectPct
+
+                        FROM AS_Entries GROUP BY CreatedBy ORDER BY TotalCases DESC";
+
+                        dtPerformance = DaoHelper.GetDataTable(sql);
+        }
+
+
+
         //OnGet start
         public void OnGet(string? statusPassed, string? searchText)
         {
@@ -40,6 +79,7 @@ namespace kt_system.Pages.Users
             }
 
             LoadPageData();
+            LoadPerformance();
 
             //Search parameters
             //Status= statusPassed;

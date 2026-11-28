@@ -1,6 +1,7 @@
 using kt_system.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection;
 
 namespace kt_system.Pages.Applications
 {
@@ -17,6 +18,8 @@ namespace kt_system.Pages.Applications
 
         public string? SearchText { get; set; }
         public string? Stage { get; set; }
+        public int RecFound { get; set; }
+
 
 
         private void LoadPageData()
@@ -103,6 +106,7 @@ namespace kt_system.Pages.Applications
             sql += " ORDER BY AppID DESC";
 
             Apps = DaoHelper.DList(sql);
+            RecFound = Apps.Count();
         }
 
 

@@ -1,36 +1,207 @@
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 10px;
 }
 
 
-/* site.css */
+/* =====================================================
+   BOOTSTRAP OVERRIDES
+===================================================== */
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
 .sidebar {
-    background: #2f5c78; /*#212529;*/
-    min-height: 100vh;
+    background: #2f5c78;
+    /*min-height: 100vh;*/
+    min-height: calc(100vh - 90px);
 }
 
     .sidebar a {
         color: white;
-        font-size:small;
+        font-size: small;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all .2s ease;
+    }
+
+        .sidebar a:hover {
+            color: #ffc107;
+            background-color: rgba(255,255,255,.1);
+        }
+
+
+/* =====================================================
+   TABLES
+===================================================== */
+
+.table-container {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+    .table-container th {
+        position: sticky;
+        top: 0;
+        background: #2f5c78;
+        color: white;
+        font-weight: 500;
+        font-size: 0.85rem;
+        z-index: 100;
+    }
+
+    .table-container td {
+        font-size: 0.85rem;
+    }
+
+/* Compact tables */
+
+.table-compact th,
+.table-compact td {
+    padding: 2px 6px !important;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   DASHBOARD CARDS
+===================================================== */
+
+.dashboard-card {
+    transition: all .2s ease;
+    cursor: pointer;
+    min-height: 70px;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+    }
+
+    .dashboard-card .card-body {
+        padding: 8px;
+    }
+
+.card-selected {
+    border: 3px solid #ffc107 !important;
+    box-shadow: 0 0 10px rgba(255,193,7,.4);
+}
+
+
+/* =====================================================
+   AUDIT INFO
+===================================================== */
+
+.audit-info {
+    font-size: 11px;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+
+.metric-card {
+    min-height: 70px;
+}
+
+    .metric-card .card-body {
+        padding: 8px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}*/
+
+
+/* site.css */
+/*.sidebar {
+    background: #2f5c78;*/ /*#212529;*/
+    /*min-height: 100vh;
+}
+
+    .sidebar a {
+        color: white;
+        font-size: small;
         text-decoration: none;
         border-radius: 6px;
         transition: all .2s ease;
@@ -47,19 +218,19 @@ body {
     overflow-y: auto;
 }
 
-.table-container th {
-    position: sticky;
-    top: 0;
-    background: #2f5c78;
-    color: white;
-    font-weight: 600;
-    font-size: 0.85rem;
-    z-index: 100;
-}
+    .table-container th {
+        position: sticky;
+        top: 0;
+        background: #2f5c78;
+        color: white;
+        font-weight: 600;
+        font-size: 0.85rem;
+        z-index: 100;
+    }
 
-.table-container td {
-    font-size: 0.85rem;
-}
+    .table-container td {
+        font-size: 0.85rem;
+    }
 
 .dashboard-card {
     transition: all 0.2s ease;
@@ -81,10 +252,15 @@ body {
 
 .dashboard-card {
     transition: all .2s;
+    min-height: 70px;
 }
+
+    .dashboard-card .card-body {
+        padding: 8px;
+    }
 
 .audit-info {
     font-size: 11px;
     color: #6c757d;
     white-space: nowrap;
-}
+}*/

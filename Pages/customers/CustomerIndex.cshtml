@@ -19,7 +19,7 @@ else
 <div class="row row-cols-7 g-3">
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="All" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>AllCust</h6>
                     <h2>@Model.AllCount</h2>
@@ -30,7 +30,7 @@ else
 
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="Active" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Active</h6>
                     <h2>@Model.activeCount</h2>
@@ -41,7 +41,7 @@ else
 
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="inactive" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>InActive</h6>
                     <h2>@Model.inactiveCount</h2>
@@ -52,7 +52,7 @@ else
 
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="advocate" class="text-decoration-none">
-            <div class="card text-bg-primary dashboard-card">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Advocate</h6>
                     <h2>@Model.advocateCount</h2>
@@ -63,7 +63,7 @@ else
 
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="Prospect" class="text-decoration-none">
-            <div class="card text-bg-primary">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Prospect</h6>
                     <h2>@Model.prospectCount</h2>
@@ -73,7 +73,7 @@ else
     </div>
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="qualified" class="text-decoration-none">
-            <div class="card text-bg-primary">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Qualified</h6>
                     <h2>@Model.qualifiedCount</h2>
@@ -84,7 +84,7 @@ else
 
     <div class="col">
         <a asp-page="/customers/CustomerIndex" asp-route-statusPassed="repeat_customer" class="text-decoration-none">
-            <div class="card text-bg-primary">
+            <div class="card text-bg-primary metric-card">
                 <div class="card-body">
                     <h6>Repeat</h6>
                     <h2>@Model.repeat_customerCount</h2>
@@ -97,28 +97,23 @@ else
 <!-- Search form -->
 <form method="get">
     <div class="row mb-2 mt-1">
-        <div class="col-md-12">
+
+        <div class="col-md-3">
             <div class="input-group input-group-sm">
-
-                <input type="text"
-                       name="searchText"
-                       value="@Model.SearchText"
-                       class="form-control"
-                       placeholder="Search application no, customer, employer..." />
-
-                <input type="hidden"
-                       name="statusPassed"
-                       value="@Model.statusPassed2" />
-
-                <button type="submit" class="btn btn-secondary">
-                    Search
-                </button>
-
+                <input type="text" name="searchText" value="@Model.SearchText" class="form-control" placeholder="Search application no, customer, employer..." />
+                <input type="hidden" name="statusPassed" value="@Model.statusPassed2" />
+                <button type="submit" class="btn btn-secondary">Search</button>
+                &nbsp
+                <a asp-page="/Customers/CustomerIndex" class="btn btn-outline-secondary">x</a>
+                &nbsp
             </div>
+        </div>
+
+        <div class="col-md-9 text-end alert-secondary">
+            <span>Found: @Model.Customers.Count customers.</span>
         </div>
     </div>
 </form>
-
 
 
 @* <form method="get" asp-page="CustomerPage" class="d-inline-flex align-items-center gap-3">

@@ -1,0 +1,372 @@
+﻿@page "{id:int?}"
+@model kt_system.Pages.Applications.ApplicationPrintModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+@* <title>Application Print</title> *@
+<title>.</title>
+
+</head>
+
+<body>
+    <div class="no-print">
+        <button onclick="window.print()">Print</button>
+    </div>
+
+    <h3>APPLICATION FORM</h3>
+    <br />
+    <br />
+
+    <div style="display:flex; gap:40px; margin-bottom:10px; justify-content: space-between">
+        <span>
+            <strong>Application No:</strong>
+            @Model.App.AppID_usr
+        </span>
+
+        <span>
+            <strong>Stage:</strong>
+            @Model.App.Stage
+        </span>
+
+        <span>
+            <strong>Created By:</strong>
+            @Model.App.CreatedBy on @Model.App.CreatedOn?.ToString("dd-MMM-yyyy HH:mm")
+        </span>
+    </div>
+
+    <hr />
+
+    <div class="section">
+
+        <div class="section-title">
+            APPLICATION
+        </div>
+
+        <table>
+            <tr>
+                <td class="label">Application ID</td>
+                <td>@Model.App.AppID</td>
+
+                <td class="label">Product</td>
+                <td>@Model.App.AppProduct</td>
+            </tr>
+
+            <tr>
+                <td class="label">Application Date</td>
+                <td>@Model.App.AppDate_usr</td>
+
+                <td class="label">Stage</td>
+                <td>@Model.App.Stage</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            CUSTOMER
+        </div>
+
+        <table>
+
+            <tr>
+                <td class="label">First Name</td>
+                <td>@Model.Cust.FirstName</td>
+
+                <td class="label">Middle Name</td>
+                <td>@Model.Cust.MiddleName</td>
+            </tr>
+
+            <tr>
+                <td class="label">Last Name</td>
+                <td>@Model.Cust.LastName</td>
+
+                <td class="label">Nationality</td>
+                <td>@Model.Cust.Nationality</td>
+            </tr>
+
+            <tr>
+                <td class="label">DOB</td>
+                <td>@Model.Cust.DOB</td>
+
+                <td class="label">Customer Type</td>
+                <td>@Model.Cust.CustomerType</td>
+            </tr>
+
+            <tr>
+                <td class="label">Arabic Name</td>
+                <td colspan="3">@Model.Cust.AraName</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            EMPLOYMENT
+        </div>
+
+        <table>
+            <tr>
+                <td class="label">Employer</td>
+                <td>@Model.Empl.Employer</td>
+
+                <td class="label">Salary</td>
+                <td class="num">@string.Format("{0:N2}", @Model.Empl.Salary)</td>
+            </tr>
+
+            <tr>
+                <td class="label">Employer Activity</td>
+                <td>@Model.Empl.EmployerActivity</td>
+
+                <td class="label">Employer Category</td>
+                <td>@Model.Empl.EmployerCatg</td>
+            </tr>
+
+            <tr>
+                <td class="label">Date Of Joining</td>
+                <td>@Model.Empl.DOJ</td>
+
+                <td class="label">Length Of Service</td>
+                <td>@Model.Empl.LOS</td>
+            </tr>
+
+            <tr>
+                <td class="label">Banking With</td>
+                <td>@Model.Empl.BankingWith</td>
+
+                <td class="label">Account Number</td>
+                <td>@Model.Empl.AccountNumber</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            PROPERTY
+        </div>
+
+        <table>
+            <tr>
+                <td class="label">Property Type</td>
+                <td>@Model.Prop.PropertyType</td>
+
+                <td class="label">Status</td>
+                <td>@Model.Prop.PropertyStatus</td>
+            </tr>
+
+            <tr>
+                <td class="label">Project</td>
+                <td>@Model.Prop.ProjectName</td>
+
+                <td class="label">Developer</td>
+                <td>@Model.Prop.DeveloperName</td>
+            </tr>
+
+            <tr>
+                <td class="label">Building</td>
+                <td colspan="3">@Model.Prop.BuildingName</td>
+            </tr>
+
+            <tr>
+                <td class="label">Original Value</td>
+                <td class="num">@string.Format("{0:N2}", @Model.Prop.OriginalPropertyValue)</td>
+
+                <td class="label">Appraisal Value</td>
+                <td class="num">@string.Format("{0:N2}", @Model.Prop.AppraisalValue)</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            PROPERTY ADDRESS
+        </div>
+
+        <table>
+            <tr>
+                <td class="label">Country</td>
+                <td>@Model.Prop.Country</td>
+
+                <td class="label">Emirate</td>
+                <td>@Model.Prop.Emirate</td>
+            </tr>
+
+            <tr>
+                <td class="label">Area</td>
+                <td>@Model.Prop.AreaName</td>
+
+                <td class="label">Street</td>
+                <td>@Model.Prop.StreetName</td>
+            </tr>
+
+            <tr>
+                <td class="label">Plot No</td>
+                <td>@Model.Prop.PlotNo</td>
+
+                <td class="label">Lot No</td>
+                <td>@Model.Prop.LotNo</td>
+            </tr>
+
+            <tr>
+                <td class="label">Title Deed</td>
+                <td>@Model.Prop.TitleDeedNo</td>
+
+                <td class="label">Registration No</td>
+                <td>@Model.Prop.RegistrationNumber</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="section">
+
+        <div class="section-title">
+            FINANCE
+        </div>
+
+        <table>
+            <tr>
+                <td class="label">Original Price</td>
+                <td class="num">@string.Format("{0:N2}", @Model.App.OriginalPrice)</td>                
+
+                <td class="label">Downpayment</td>
+                <td class="num">@string.Format("{0:N2}", @Model.App.Downpayment)</td>
+            </tr>
+
+            <tr>
+                <td class="label">NFA</td>
+                <td class="num">@string.Format("{0:N2}", @Model.App.NFA)</td>
+
+                <td class="label">Profit Rate</td>
+                <td class="num">@string.Format("{0:N2}", @Model.App.ProfitRate)</td>
+            </tr>
+
+            <tr>
+                <td class="label">Tenor</td>
+                <td class="num">@string.Format("{0:N2}", @Model.App.Tenor)</td>
+
+                <td class="label">DSR</td>
+                <td class="num">@string.Format("{0:N2}", @Model.App.DSR)</td>
+            </tr>
+
+            <tr>
+                <td class="label">Sales Name</td>
+                <td colspan="3">@Model.App.SalesName</td>
+            </tr>
+
+            <tr>
+                <td class="label">Remarks</td>
+                <td colspan="3">@Model.App.Remarks</td>
+            </tr>
+
+        </table>
+    </div>
+
+    <br />
+    <br />
+
+    <br />
+    <hr />
+    <br />
+    <h3>Declaration</h3>
+    <p>I hereby declare that the information provided above is true and correct.</p>
+
+    <br />
+    <br />
+    <table style="width:100%;border:none">
+        <tr>
+            <td style="border:none;text-align:center">
+                __________________________
+                <br />
+                Customer Signature
+            </td>
+
+            <td style="border:none;text-align:center">
+                __________________________
+                <br />
+                Officer Signature
+            </td>
+
+        </tr>
+    </table>
+
+    <!--
+    <div style="display:flex; gap:40px; margin-bottom:10px; justify-content: space-between">
+    <span>Customer Signature</span>
+    <span>Officer Signature</span>
+    </div>
+    -->
+
+</body>
+
+</html>
+
+<style>
+
+    body {
+        font-family: Arial;
+        font-size: 12px;
+        margin: 10px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    .section {
+        margin-top: 10px;
+        page-break-inside: avoid;
+    }
+
+    .section-title {
+        background: #0d6efd;
+        color: white;
+        padding: 8px;
+        font-weight: bold;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td {
+        border: 1px solid #ddd;
+        padding: 3px;
+    }
+
+    .num {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .label {
+        background: #f8f9fa;
+        font-weight: bold;
+        width: 20%;
+    }
+
+    @@media print {
+        .no-print {
+            display: none;
+        }
+    }
+</style>

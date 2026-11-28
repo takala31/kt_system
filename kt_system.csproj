@@ -43,6 +43,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="37.pdf" />
+    <None Remove="38.pdf" />
+    <None Remove="38x.pdf" />
+    <None Remove="40.pdf" />
+    <None Remove="400000.pdf" />
     <None Remove="Create_old_html_accordion.txt" />
     <None Remove="Pages\Shared\_Layout.cshtml - Copy.css" />
   </ItemGroup>
